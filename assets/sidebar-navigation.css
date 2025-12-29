@@ -20,6 +20,7 @@
   top: var(--header_height_static, var(--header_height, 0px));
   align-self: flex-start;
   height: calc(100vh - var(--header_height_static, var(--header_height, 0px)));
+  max-height: calc(100vh - var(--header_height_static, var(--header_height, 0px)));
   overflow-y: auto;
   overflow-x: visible;
   z-index: 1000;
@@ -30,6 +31,10 @@
   border-left: none;
   border-top: none;
   border-bottom: none;
+  /* Stelle sicher, dass die Sidebar auf Desktop immer sichtbar bleibt */
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 /* Main Content - 80% */
@@ -542,6 +547,20 @@
   
   .main-wrapper {
     flex-direction: column;
+  }
+  .main-wrapper {
+    flex-direction: column;
+  }
+  
+  .sidebar-navigation {
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    top: 0;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--sidebar_nav_bd, var(--custom_bd));
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   }
   
   .main-wrapper > #content {
