@@ -220,7 +220,7 @@
         "settings": {
           "title": "Katalog",
           "title_font": "primary",
-          "menu": "main-menu",
+          "menu": "sidebar-men",
           "color_scheme": "",
           "text_color": "",
           "hover_color": "",
