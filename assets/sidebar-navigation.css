@@ -48,10 +48,6 @@
   width: 100%;
   position: relative;
   overflow: visible;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  min-height: 100%;
 }
 
 .sidebar-nav-title {
@@ -285,27 +281,30 @@
 }
 
 
-/* Sub-submenu Styles - Expandiert weiter nach rechts */
+/* Sub-submenu Styles - Expandiert weiter nach links */
 .sidebar-nav-subsubmenu {
   list-style: none;
   margin: 0;
   padding: 8px 0;
   position: absolute;
-  left: 100%;
+  right: 100%;
+  left: auto;
   top: 0;
   min-width: 200px;
   max-width: 300px;
   background: var(--sidebar_nav_bg, var(--primary_bg));
   border: 1px solid var(--sidebar_nav_bd, var(--custom_bd, var(--alto)));
-  border-left: 3px solid var(--sidebar_nav_hover_color, var(--accent, var(--primary_bg_btn)));
+  border-right: 3px solid var(--sidebar_nav_hover_color, var(--accent, var(--primary_bg_btn)));
+  border-left: 1px solid var(--sidebar_nav_bd, var(--custom_bd, var(--alto)));
   border-radius: 0;
-  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.06);
+  box-shadow: -2px 2px 12px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.06);
   opacity: 0;
   visibility: hidden;
-  transform: translateX(-8px);
+  transform: translateX(8px);
   transition: all 0.2s ease;
   z-index: 1002 !important;
-  margin-left: 4px;
+  margin-right: 4px;
+  margin-left: 0;
   max-height: calc(100vh - var(--header_height_static, var(--header_height, 0px)) - 40px);
   overflow-y: auto;
   overflow-x: visible;
