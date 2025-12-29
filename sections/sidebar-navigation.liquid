@@ -140,11 +140,13 @@
     <p class="sidebar-nav-empty">{{ 'sidebar_navigation.no_menu' | t | default: 'Bitte wählen Sie ein Menü in den Theme-Einstellungen aus.' }}</p>
   {%- endif -%}
   
-  <!-- Programmed by Bereich -->
+  <!-- Programmed by Bereich - nur im Theme Editor sichtbar -->
+  {%- if request.design_mode -%}
   <div class="sidebar-programmed-by">
     <span class="sidebar-programmed-by-label">programmed by</span>
     <span class="sidebar-programmed-by-name">Venture Youngs</span>
   </div>
+  {%- endif -%}
 </nav>
 
   {% style %}
