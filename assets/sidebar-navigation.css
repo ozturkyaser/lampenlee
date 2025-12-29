@@ -48,6 +48,10 @@
   width: 100%;
   position: relative;
   overflow: visible;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100%;
 }
 
 .sidebar-nav-title {
@@ -281,30 +285,27 @@
 }
 
 
-/* Sub-submenu Styles - Expandiert weiter nach links */
+/* Sub-submenu Styles - Expandiert weiter nach rechts */
 .sidebar-nav-subsubmenu {
   list-style: none;
   margin: 0;
   padding: 8px 0;
   position: absolute;
-  right: 100%;
-  left: auto;
+  left: 100%;
   top: 0;
   min-width: 200px;
   max-width: 300px;
   background: var(--sidebar_nav_bg, var(--primary_bg));
   border: 1px solid var(--sidebar_nav_bd, var(--custom_bd, var(--alto)));
-  border-right: 3px solid var(--sidebar_nav_hover_color, var(--accent, var(--primary_bg_btn)));
-  border-left: 1px solid var(--sidebar_nav_bd, var(--custom_bd, var(--alto)));
+  border-left: 3px solid var(--sidebar_nav_hover_color, var(--accent, var(--primary_bg_btn)));
   border-radius: 0;
-  box-shadow: -2px 2px 12px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.06);
+  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.06);
   opacity: 0;
   visibility: hidden;
-  transform: translateX(8px);
+  transform: translateX(-8px);
   transition: all 0.2s ease;
   z-index: 1002 !important;
-  margin-right: 4px;
-  margin-left: 0;
+  margin-left: 4px;
   max-height: calc(100vh - var(--header_height_static, var(--header_height, 0px)) - 40px);
   overflow-y: auto;
   overflow-x: visible;
@@ -369,6 +370,38 @@
   font-size: 0.9em;
   padding: 20px 0;
   margin: 0;
+}
+
+/* Programmed by Bereich - Standardmäßig versteckt, nur im Theme Editor sichtbar */
+.sidebar-programmed-by {
+  display: none !important;
+  margin-top: auto;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  border-top: 1px solid var(--sidebar_nav_bd, var(--custom_bd, var(--alto)));
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--sidebar_nav_fg, var(--primary_text));
+  opacity: 0.7;
+}
+
+/* Nur im Theme Editor anzeigen */
+.theme-editor .sidebar-programmed-by {
+  display: flex !important;
+}
+
+.sidebar-programmed-by-label {
+  text-transform: lowercase;
+  font-weight: var(--main_fw, 400);
+  letter-spacing: 0.5px;
+}
+
+.sidebar-programmed-by-name {
+  font-weight: var(--main_fw_strong, 600);
+  color: var(--sidebar_nav_hover_color, var(--accent, var(--primary_bg_btn)));
+  opacity: 1;
 }
 
 /* RTL Support */
