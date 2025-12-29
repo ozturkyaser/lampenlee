@@ -63,7 +63,7 @@
   {%- endif -%}
 </nav>
 
-{% style %}
+  {% style %}
   #shopify-section-{{ section.id }} {
     --sidebar_nav_bg: var(--{{ section.settings.color_scheme }}_bg);
     --sidebar_nav_fg: {% if section.settings.text_color != blank %}{{ section.settings.text_color }}{% else %}var(--{{ section.settings.color_scheme }}_fg){% endif %};
@@ -78,6 +78,8 @@
     --sidebar_menu_spacing: {{ section.settings.menu_item_spacing | default: 4 }}px;
     --sidebar_title_margin_bottom: {{ section.settings.title_margin_bottom | default: 25 }}px;
     --sidebar_title_padding_bottom: {{ section.settings.title_padding_bottom | default: 18 }}px;
+    --sidebar_z_index: {{ section.settings.z_index | default: 100 }};
+    --sidebar_submenu_z_index: {{ section.settings.submenu_z_index | default: 10 }};
   }
 {% endstyle %}
 
@@ -244,6 +246,30 @@
       "label": "Mobile Menü-Titel",
       "default": "Menü",
       "info": "Der Titel, der im Hamburger-Menü-Button angezeigt wird."
+    },
+    {
+      "type": "header",
+      "content": "Z-Index Einstellungen"
+    },
+    {
+      "type": "range",
+      "id": "z_index",
+      "label": "Z-Index der Sidebar",
+      "min": 1,
+      "max": 1000,
+      "step": 1,
+      "default": 100,
+      "info": "Kontrolliert, wie die Sidebar über anderen Elementen liegt. Höhere Werte = weiter oben."
+    },
+    {
+      "type": "range",
+      "id": "submenu_z_index",
+      "label": "Z-Index der Submenüs",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "default": 10,
+      "info": "Kontrolliert, wie Submenüs über anderen Elementen liegen. Sollte niedriger als der Sidebar Z-Index sein."
     }
   ],
   "presets": [
