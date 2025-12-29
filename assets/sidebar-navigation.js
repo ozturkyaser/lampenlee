@@ -7,7 +7,8 @@
   const overlay = document.querySelector('.sidebar-mobile-overlay');
   const body = document.body;
   
-  if (!mobileToggle || !sidebarNav) return;
+  // Sidebar muss existieren, Mobile-Toggle ist optional (nur auf Mobile vorhanden)
+  if (!sidebarNav) return;
   
   function toggleMenu() {
     const isActive = sidebarNav.classList.contains('active');
@@ -82,5 +83,6 @@
     }, 250);
   });
 })();
+
 
 
