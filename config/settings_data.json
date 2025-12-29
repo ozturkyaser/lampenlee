@@ -233,7 +233,10 @@
           "menu_padding": 8,
           "menu_padding_horizontal": 8,
           "menu_item_spacing": 0,
-          "mobile_menu_title": "Menü"
+          "enable_mobile": true,
+          "mobile_menu_title": "Menü",
+          "show_menu_images": true,
+          "menu_image_size": 40
         }
       }
     },
