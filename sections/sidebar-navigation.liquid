@@ -1,0 +1,256 @@
+{%- liquid
+  assign menu = section.settings.menu
+  if menu != empty and linklists[menu].links.size > 0
+    assign has_menu = true
+  else
+    assign has_menu = false
+  endif
+-%}
+
+<!-- Mobile Hamburger Button -->
+<button class="sidebar-mobile-toggle" aria-label="Menü öffnen" aria-expanded="false">
+  <span class="hamburger-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </span>
+  {%- if section.settings.mobile_menu_title != empty -%}
+    <span class="mobile-menu-title">{{ section.settings.mobile_menu_title }}</span>
+  {%- endif -%}
+</button>
+
+<!-- Mobile Overlay -->
+<div class="sidebar-mobile-overlay"></div>
+
+<nav id="shopify-section-{{ section.id }}" class="sidebar-nav palette-{{ section.settings.color_scheme }}" {{ section.shopify_attributes }}>
+  {%- if section.settings.title != empty -%}
+    <h2 class="sidebar-nav-title ff-{{ section.settings.title_font }}">{{ section.settings.title }}</h2>
+  {%- endif -%}
+  
+  {%- if has_menu -%}
+    <ul class="sidebar-nav-menu">
+      {%- for link in linklists[menu].links -%}
+        <li class="sidebar-nav-item{% if link.active %} active{% endif %}{% if link.links != blank %} has-children{% endif %}">
+          <a href="{{ link.url }}" class="sidebar-nav-link">
+            <span class="sidebar-nav-text">{{ link.title }}</span>
+            {%- if link.links != blank -%}
+              <span class="sidebar-nav-arrow">›</span>
+            {%- endif -%}
+          </a>
+          {%- if link.links != blank -%}
+            <ul class="sidebar-nav-submenu">
+              {%- for child_link in link.links -%}
+                <li class="sidebar-nav-subitem{% if child_link.active %} active{% endif %}">
+                  <a href="{{ child_link.url }}" class="sidebar-nav-sublink">{{ child_link.title }}</a>
+                  {%- if child_link.links != blank -%}
+                    <ul class="sidebar-nav-subsubmenu">
+                      {%- for grandchild_link in child_link.links -%}
+                        <li class="sidebar-nav-subsubitem{% if grandchild_link.active %} active{% endif %}">
+                          <a href="{{ grandchild_link.url }}" class="sidebar-nav-subsublink">{{ grandchild_link.title }}</a>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- else -%}
+    <p class="sidebar-nav-empty">{{ 'sidebar_navigation.no_menu' | t | default: 'Bitte wählen Sie ein Menü in den Theme-Einstellungen aus.' }}</p>
+  {%- endif -%}
+</nav>
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    --sidebar_nav_bg: var(--{{ section.settings.color_scheme }}_bg);
+    --sidebar_nav_fg: {% if section.settings.text_color != blank %}{{ section.settings.text_color }}{% else %}var(--{{ section.settings.color_scheme }}_fg){% endif %};
+    --sidebar_nav_title: var(--{{ section.settings.color_scheme }}_title);
+    --sidebar_nav_bd: var(--{{ section.settings.color_scheme }}_bd);
+    --sidebar_nav_hover_color: {% if section.settings.hover_color != blank %}{{ section.settings.hover_color }}{% else %}var(--accent, var(--primary_bg_btn)){% endif %};
+    --sidebar_title_size: {{ section.settings.title_font_size | default: 1.4 }}rem;
+    --sidebar_menu_font_size: {{ section.settings.menu_font_size | default: 1.0 }}rem;
+    --sidebar_submenu_font_size: {{ section.settings.submenu_font_size | default: 0.9 }}rem;
+    --sidebar_subsubmenu_font_size: {{ section.settings.subsubmenu_font_size | default: 0.9 }}rem;
+    --sidebar_menu_padding: {{ section.settings.menu_padding | default: 14 }}px {{ section.settings.menu_padding_horizontal | default: 12 }}px;
+    --sidebar_menu_spacing: {{ section.settings.menu_item_spacing | default: 4 }}px;
+    --sidebar_title_margin_bottom: {{ section.settings.title_margin_bottom | default: 25 }}px;
+    --sidebar_title_padding_bottom: {{ section.settings.title_padding_bottom | default: 18 }}px;
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Vertikale Navigation",
+  "class": "shopify-section-sidebar-navigation",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titel",
+      "default": "Navigation"
+    },
+    {
+      "type": "select",
+      "id": "title_font",
+      "label": "Titel-Schriftart",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primär"
+        },
+        {
+          "value": "secondary",
+          "label": "Sekundär"
+        }
+      ],
+      "default": "primary"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menü",
+      "info": "Wählen Sie das Menü aus, das in der vertikalen Navigation angezeigt werden soll."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Farbschema",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Farben"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Menütext-Farbe",
+      "info": "Lassen Sie leer, um die Standard-Farbe des Farbschemas zu verwenden."
+    },
+    {
+      "type": "color",
+      "id": "hover_color",
+      "label": "Hover-Effekt Farbe",
+      "info": "Lassen Sie leer, um die Akzent-Farbe zu verwenden."
+    },
+    {
+      "type": "header",
+      "content": "Typografie"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Titel Schriftgröße",
+      "min": 0.8,
+      "max": 2.5,
+      "step": 0.1,
+      "unit": "rem",
+      "default": 1.4
+    },
+    {
+      "type": "range",
+      "id": "menu_font_size",
+      "label": "Hauptmenü Schriftgröße",
+      "min": 0.7,
+      "max": 1.5,
+      "step": 0.1,
+      "unit": "rem",
+      "default": 1.0
+    },
+    {
+      "type": "range",
+      "id": "submenu_font_size",
+      "label": "Untermenü Schriftgröße",
+      "min": 0.7,
+      "max": 1.2,
+      "step": 0.1,
+      "unit": "rem",
+      "default": 0.9
+    },
+    {
+      "type": "range",
+      "id": "subsubmenu_font_size",
+      "label": "Unter-Untermenü Schriftgröße",
+      "min": 0.7,
+      "max": 1.1,
+      "step": 0.1,
+      "unit": "rem",
+      "default": 0.9
+    },
+    {
+      "type": "header",
+      "content": "Abstände"
+    },
+    {
+      "type": "range",
+      "id": "title_margin_bottom",
+      "label": "Abstand unter Titel",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "title_padding_bottom",
+      "label": "Padding unter Titel (für Trennlinie)",
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "menu_padding",
+      "label": "Menü-Item Padding (vertikal)",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "menu_padding_horizontal",
+      "label": "Menü-Item Padding (horizontal)",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "menu_item_spacing",
+      "label": "Abstand zwischen Menü-Items",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Mobile Ansicht"
+    },
+    {
+      "type": "text",
+      "id": "mobile_menu_title",
+      "label": "Mobile Menü-Titel",
+      "default": "Menü",
+      "info": "Der Titel, der im Hamburger-Menü-Button angezeigt wird."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Vertikale Navigation"
+    }
+  ]
+}
+{% endschema %}
+

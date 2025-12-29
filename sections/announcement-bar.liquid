@@ -1,0 +1,43 @@
+{%- if section.settings.text != empty -%}
+  <div class="shopify-section-announcement-bar">
+    <div class="text-center">
+      <div>
+        <p>
+          {{ section.settings.text | replace: '</p><p>', '<br>' | remove: '<p>' | remove: '</p>' }}
+        </p>
+      </div>
+    {%- style -%}
+      :root {
+      --custom_alert_bg: var(--{{ section.settings.color_palette }}_bg);
+      --custom_alert_fg: var(--{{ section.settings.color_palette }}_fg);
+      }
+    {%- endstyle -%}
+  </div>
+</div>
+{%- endif -%}
+
+
+{% schema %}
+{
+  "name": "t:static_sections.announcement_bar.name",
+  "class": "shopify-section-announcement-bar-container",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:static_sections.announcement_bar.settings.paragraph"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_palette",
+      "label": "t:global.color_palette.label",
+      "default": "scheme-8"
+    },
+    {
+      "id": "text",
+      "type": "richtext",
+      "label": "t:static_sections.announcement_bar.settings.text.label",
+      "default": "<p>Shout out your big announcement here!</p>"
+    }
+  ]
+}
+{% endschema %}
