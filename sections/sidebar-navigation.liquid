@@ -5,8 +5,12 @@
   else
     assign has_menu = false
   endif
+  
+  assign show_menu_images = section.settings.show_menu_images
+  assign menu_image_size = section.settings.menu_image_size | default: 40
 -%}
 
+{%- if section.settings.enable_mobile -%}
 <!-- Mobile Hamburger Button -->
 <button class="sidebar-mobile-toggle" aria-label="Menü öffnen" aria-expanded="false">
   <span class="hamburger-icon">
@@ -21,6 +25,7 @@
 
 <!-- Mobile Overlay -->
 <div class="sidebar-mobile-overlay"></div>
+{%- endif -%}
 
 <nav id="shopify-section-{{ section.id }}" class="sidebar-nav palette-{{ section.settings.color_scheme }}" {{ section.shopify_attributes }}>
   {%- if section.settings.title != empty -%}
@@ -32,6 +37,29 @@
       {%- for link in linklists[menu].links -%}
         <li class="sidebar-nav-item{% if link.active %} active{% endif %}{% if link.links != blank %} has-children{% endif %}">
           <a href="{{ link.url }}" class="sidebar-nav-link">
+            {%- if show_menu_images and link.object.featured_image -%}
+              <span class="sidebar-nav-image">
+                <img
+                  src="{{ link.object.featured_image | image_url: width: menu_image_size, height: menu_image_size }}"
+                  srcset="{{ link.object.featured_image | image_url: width: menu_image_size, height: menu_image_size }} 1x, {{ link.object.featured_image | image_url: width: menu_image_size | times: 2, height: menu_image_size | times: 2 }} 2x"
+                  alt="{{ link.object.featured_image.alt | default: link.title | escape }}"
+                  width="{{ menu_image_size }}"
+                  height="{{ menu_image_size }}"
+                  loading="lazy"
+                >
+              </span>
+            {%- elsif show_menu_images and link.object.image -%}
+              <span class="sidebar-nav-image">
+                <img
+                  src="{{ link.object.image | image_url: width: menu_image_size, height: menu_image_size }}"
+                  srcset="{{ link.object.image | image_url: width: menu_image_size, height: menu_image_size }} 1x, {{ link.object.image | image_url: width: menu_image_size | times: 2, height: menu_image_size | times: 2 }} 2x"
+                  alt="{{ link.object.image.alt | default: link.title | escape }}"
+                  width="{{ menu_image_size }}"
+                  height="{{ menu_image_size }}"
+                  loading="lazy"
+                >
+              </span>
+            {%- endif -%}
             <span class="sidebar-nav-text">{{ link.title }}</span>
             {%- if link.links != blank -%}
               <span class="sidebar-nav-arrow">›</span>
@@ -41,12 +69,62 @@
             <ul class="sidebar-nav-submenu">
               {%- for child_link in link.links -%}
                 <li class="sidebar-nav-subitem{% if child_link.active %} active{% endif %}">
-                  <a href="{{ child_link.url }}" class="sidebar-nav-sublink">{{ child_link.title }}</a>
+                  <a href="{{ child_link.url }}" class="sidebar-nav-sublink">
+                    {%- if show_menu_images and child_link.object.featured_image -%}
+                      <span class="sidebar-nav-image">
+                        <img
+                          src="{{ child_link.object.featured_image | image_url: width: menu_image_size, height: menu_image_size }}"
+                          srcset="{{ child_link.object.featured_image | image_url: width: menu_image_size, height: menu_image_size }} 1x, {{ child_link.object.featured_image | image_url: width: menu_image_size | times: 2, height: menu_image_size | times: 2 }} 2x"
+                          alt="{{ child_link.object.featured_image.alt | default: child_link.title | escape }}"
+                          width="{{ menu_image_size }}"
+                          height="{{ menu_image_size }}"
+                          loading="lazy"
+                        >
+                      </span>
+                    {%- elsif show_menu_images and child_link.object.image -%}
+                      <span class="sidebar-nav-image">
+                        <img
+                          src="{{ child_link.object.image | image_url: width: menu_image_size, height: menu_image_size }}"
+                          srcset="{{ child_link.object.image | image_url: width: menu_image_size, height: menu_image_size }} 1x, {{ child_link.object.image | image_url: width: menu_image_size | times: 2, height: menu_image_size | times: 2 }} 2x"
+                          alt="{{ child_link.object.image.alt | default: child_link.title | escape }}"
+                          width="{{ menu_image_size }}"
+                          height="{{ menu_image_size }}"
+                          loading="lazy"
+                        >
+                      </span>
+                    {%- endif -%}
+                    {{ child_link.title }}
+                  </a>
                   {%- if child_link.links != blank -%}
                     <ul class="sidebar-nav-subsubmenu">
                       {%- for grandchild_link in child_link.links -%}
                         <li class="sidebar-nav-subsubitem{% if grandchild_link.active %} active{% endif %}">
-                          <a href="{{ grandchild_link.url }}" class="sidebar-nav-subsublink">{{ grandchild_link.title }}</a>
+                          <a href="{{ grandchild_link.url }}" class="sidebar-nav-subsublink">
+                            {%- if show_menu_images and grandchild_link.object.featured_image -%}
+                              <span class="sidebar-nav-image">
+                                <img
+                                  src="{{ grandchild_link.object.featured_image | image_url: width: menu_image_size, height: menu_image_size }}"
+                                  srcset="{{ grandchild_link.object.featured_image | image_url: width: menu_image_size, height: menu_image_size }} 1x, {{ grandchild_link.object.featured_image | image_url: width: menu_image_size | times: 2, height: menu_image_size | times: 2 }} 2x"
+                                  alt="{{ grandchild_link.object.featured_image.alt | default: grandchild_link.title | escape }}"
+                                  width="{{ menu_image_size }}"
+                                  height="{{ menu_image_size }}"
+                                  loading="lazy"
+                                >
+                              </span>
+                            {%- elsif show_menu_images and grandchild_link.object.image -%}
+                              <span class="sidebar-nav-image">
+                                <img
+                                  src="{{ grandchild_link.object.image | image_url: width: menu_image_size, height: menu_image_size }}"
+                                  srcset="{{ grandchild_link.object.image | image_url: width: menu_image_size, height: menu_image_size }} 1x, {{ grandchild_link.object.image | image_url: width: menu_image_size | times: 2, height: menu_image_size | times: 2 }} 2x"
+                                  alt="{{ grandchild_link.object.image.alt | default: grandchild_link.title | escape }}"
+                                  width="{{ menu_image_size }}"
+                                  height="{{ menu_image_size }}"
+                                  loading="lazy"
+                                >
+                              </span>
+                            {%- endif -%}
+                            {{ grandchild_link.title }}
+                          </a>
                         </li>
                       {%- endfor -%}
                     </ul>
@@ -78,8 +156,7 @@
     --sidebar_menu_spacing: {{ section.settings.menu_item_spacing | default: 4 }}px;
     --sidebar_title_margin_bottom: {{ section.settings.title_margin_bottom | default: 25 }}px;
     --sidebar_title_padding_bottom: {{ section.settings.title_padding_bottom | default: 18 }}px;
-    --sidebar_z_index: {{ section.settings.z_index | default: 100 }};
-    --sidebar_submenu_z_index: {{ section.settings.submenu_z_index | default: 10 }};
+    --menu_image_size: {{ section.settings.menu_image_size | default: 40 }}px;
   }
 {% endstyle %}
 
@@ -241,6 +318,13 @@
       "content": "Mobile Ansicht"
     },
     {
+      "type": "checkbox",
+      "id": "enable_mobile",
+      "label": "Mobile Ansicht aktivieren",
+      "default": true,
+      "info": "Wenn deaktiviert, wird die Mobile-Hamburger-Navigation nicht angezeigt."
+    },
+    {
       "type": "text",
       "id": "mobile_menu_title",
       "label": "Mobile Menü-Titel",
@@ -249,27 +333,25 @@
     },
     {
       "type": "header",
-      "content": "Z-Index Einstellungen"
+      "content": "Menü-Bilder"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_menu_images",
+      "label": "Bilder in Menü-Items anzeigen",
+      "default": false,
+      "info": "Zeigt Bilder für Menü-Items an, wenn verfügbar (funktioniert mit Collections, Products und Pages, die ein Bild haben)."
     },
     {
       "type": "range",
-      "id": "z_index",
-      "label": "Z-Index der Sidebar",
-      "min": 1,
-      "max": 1001,
-      "step": 10,
-      "default": 100,
-      "info": "Kontrolliert, wie die Sidebar über anderen Elementen liegt. Höhere Werte = weiter oben."
-    },
-    {
-      "type": "range",
-      "id": "submenu_z_index",
-      "label": "Z-Index der Submenüs",
-      "min": 1,
-      "max": 101,
-      "step": 1,
-      "default": 10,
-      "info": "Kontrolliert, wie Submenüs über anderen Elementen liegen. Sollte niedriger als der Sidebar Z-Index sein."
+      "id": "menu_image_size",
+      "label": "Bildgröße",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40,
+      "info": "Größe der Bilder in Menü-Items (nur sichtbar, wenn 'Bilder in Menü-Items anzeigen' aktiviert ist)."
     }
   ],
   "presets": [

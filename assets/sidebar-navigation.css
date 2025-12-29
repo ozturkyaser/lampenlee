@@ -21,7 +21,7 @@
   height: calc(100vh - var(--header_height_static, var(--header_height, 0px)));
   overflow-y: auto;
   overflow-x: hidden;
-  z-index: var(--sidebar_z_index, 100);
+  z-index: 1000;
   flex-shrink: 0;
   --sidebar_nav_width: 300px;
   /* Theme Integration */
@@ -78,6 +78,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
   padding: var(--sidebar_menu_padding, 14px 12px);
   color: var(--sidebar_nav_fg, var(--primary_text));
   text-decoration: none;
@@ -101,6 +102,25 @@
 
 .sidebar-nav-text {
   flex: 1;
+}
+
+.sidebar-nav-image {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  margin-right: 10px;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.sidebar-nav-image img {
+  width: var(--menu_image_size, 40px);
+  height: var(--menu_image_size, 40px);
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
 }
 
 .sidebar-nav-link::before {
@@ -176,7 +196,7 @@
   visibility: hidden;
   transform: translateX(-8px);
   transition: all 0.2s ease;
-  z-index: var(--sidebar_submenu_z_index, 10);
+  z-index: 1001;
   margin-left: 4px;
   max-height: calc(100vh - var(--header_height_static, var(--header_height, 0px)) - 40px);
   overflow-y: auto;
@@ -220,8 +240,10 @@
 }
 
 .sidebar-nav-sublink {
-  display: block;
+  display: flex;
+  align-items: center;
   padding: 10px 16px;
+  gap: 10px;
   color: var(--sidebar_nav_fg, var(--primary_text));
   text-decoration: none;
   font-size: var(--sidebar_submenu_font_size, 0.9rem);
@@ -273,7 +295,7 @@
   visibility: hidden;
   transform: translateX(-8px);
   transition: all 0.2s ease;
-  z-index: calc(var(--sidebar_submenu_z_index, 10) + 1);
+  z-index: 1002;
   margin-left: 4px;
   max-height: calc(100vh - var(--header_height_static, var(--header_height, 0px)) - 40px);
   overflow-y: auto;
@@ -298,8 +320,10 @@
 }
 
 .sidebar-nav-subsublink {
-  display: block;
+  display: flex;
+  align-items: center;
   padding: 8px 16px;
+  gap: 10px;
   color: var(--sidebar_nav_fg, var(--primary_text));
   text-decoration: none;
   font-size: var(--sidebar_subsubmenu_font_size, 0.9rem);
