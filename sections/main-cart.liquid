@@ -212,16 +212,54 @@
                         {%- if line_item.selling_plan_allocation -%}
                           <li>{{ line_item.selling_plan_allocation.selling_plan.name }}</li>
                         {%- endif -%}
+                        {%- liquid
+                          assign length_value_display = 0
+                          assign price_per_unit_display = 0
+                          assign additional_cost_display = 0
+                          
+                          for property in line_item.properties
+                            if property.first == 'Länge'
+                              assign length_value_display = property.last
+                            elsif property.first == '_Preis pro Einheit'
+                              assign price_per_unit_display = property.last | times: 1
+                            elsif property.first == '_Zusätzliche Kosten'
+                              assign additional_cost_display = property.last | times: 1
+                            endif
+                          endfor
+                          
+                          if additional_cost_display == 0 and length_value_display != blank and price_per_unit_display > 0
+                            assign length_numeric = length_value_display | remove: 'cm' | remove: 'm' | remove: ' ' | times: 1
+                            if length_numeric > 0
+                              assign additional_cost_display = length_numeric | times: price_per_unit_display
+                            endif
+                          endif
+                        -%}
                         {%- for property in line_item.properties -%}
-                          {%- if property.first.first == '_' or property.last == blank -%}{%- continue -%}{%- endif -%}
-                          <li>
-                            {{ property.first }}:&nbsp;
-                            {%- if property.last contains '/uploads/' -%}
-                              <a href="{{ property.last }}">{{ property.last | split: '/' | last }}</a>
-                            {%- else -%}
-                              {{- property.last -}}
-                            {%- endif %}
-                          </li>
+                          {%- liquid
+                            assign skip_property = false
+                            if property.first.first == '_'
+                              assign skip_property = true
+                            elsif property.last == blank
+                              assign skip_property = true
+                            elsif property.first == '_Preis pro Einheit'
+                              assign skip_property = true
+                            elsif property.first == '_Zusätzliche Kosten'
+                              assign skip_property = true
+                            endif
+                          -%}
+                          {%- unless skip_property -%}
+                            <li>
+                              <strong>{{ property.first }}:</strong>&nbsp;
+                              {%- if property.last contains '/uploads/' -%}
+                                <a href="{{ property.last }}">{{ property.last | split: '/' | last }}</a>
+                              {%- else -%}
+                                {{- property.last -}}
+                                {%- if property.first == 'Länge' and additional_cost_display > 0 -%}
+                                  <span class="additional-cost-info"> (+ {{ additional_cost_display | money }})</span>
+                                {%- endif -%}
+                              {%- endif %}
+                            </li>
+                          {%- endunless -%}
                         {%- endfor -%}
                       </ul>
                     {%- endif -%}

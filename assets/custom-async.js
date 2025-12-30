@@ -5227,6 +5227,12 @@ var ajaxCart = (function (module) {
 
 		if (hasBulkItems) {
 			// In this case we have to use bulk add with items array with /cart/add.js instead of the regular form-based add
+			// Ensure all extra field properties are set before creating FormData
+			if (window.ProductExtraFields) {
+				window.ProductExtraFields.fields.forEach(field => {
+					window.ProductExtraFields.updateFormProperties(field.wrapper, field.config);
+				});
+			}
 			const formData = new FormData(form);
 
 			// Prepare items array - start with main product
@@ -5306,6 +5312,12 @@ var ajaxCart = (function (module) {
 				});
 		} else {
 			// Use regular form-based add for single product
+			// Ensure all extra field properties are set before creating FormData
+			if (window.ProductExtraFields) {
+				window.ProductExtraFields.fields.forEach(field => {
+					window.ProductExtraFields.updateFormProperties(field.wrapper, field.config);
+				});
+			}
 			formData = new FormData(form);
 			formData.append('sections', sectionsToFetch);
 			config = {

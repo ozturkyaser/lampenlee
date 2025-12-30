@@ -99,6 +99,20 @@
   font-size: 1.1rem;
 }
 
+/* Cart Display Styles */
+.additional-cost {
+  color: var(--accent, #007bff);
+  font-weight: 500;
+  font-size: 0.9em;
+}
+
+.additional-cost-info {
+  color: var(--accent, #007bff);
+  font-weight: 500;
+  font-size: 0.85em;
+  margin-left: 4px;
+}
+
 /* Mobile Responsive */
 @media only screen and (max-width: 47.5em) {
   .product-extra-field {

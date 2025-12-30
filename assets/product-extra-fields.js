@@ -237,23 +237,33 @@
       const value = input.value;
       const propertyName = config.propertyName;
       
-      // Remove existing property input
-      const existingProperty = form.querySelector(`input[name="properties[${propertyName}]"]`);
-      if (existingProperty) {
-        existingProperty.remove();
-      }
+      // Remove existing property inputs (alle Varianten)
+      const existingProperties = form.querySelectorAll(`input[name="properties[${propertyName}]"], input[name*="properties[${propertyName}]"]`);
+      existingProperties.forEach(prop => prop.remove());
       
       // Add property if value exists
-      if (value && value !== '') {
+      if (value && value !== '' && parseFloat(value) > 0) {
         const propertyInput = document.createElement('input');
         propertyInput.type = 'hidden';
         propertyInput.name = `properties[${propertyName}]`;
         propertyInput.value = value + (config.unit ? ' ' + config.unit : '');
         form.appendChild(propertyInput);
+        
+        // Debug log
+        console.log('Extra Field Property gesetzt:', propertyName, propertyInput.value);
+      }
+      
+      // Add price per unit property (für Berechnung im Warenkorb)
+      if (config.pricePerUnit > 0) {
+        const pricePerUnitInput = document.createElement('input');
+        pricePerUnitInput.type = 'hidden';
+        pricePerUnitInput.name = 'properties[_Preis pro Einheit]';
+        pricePerUnitInput.value = config.pricePerUnit;
+        form.appendChild(pricePerUnitInput);
       }
       
       // Add additional cost property if price calculation is enabled
-      if (config.pricePerUnit > 0 && value) {
+      if (config.pricePerUnit > 0 && value && parseFloat(value) > 0) {
         const additionalCost = Math.round(parseFloat(value) * config.pricePerUnit);
         
         // Remove existing additional cost property
@@ -268,6 +278,9 @@
           costInput.name = 'properties[_Zusätzliche Kosten]';
           costInput.value = additionalCost;
           form.appendChild(costInput);
+          
+          // Debug log
+          console.log('Zusätzliche Kosten gesetzt:', additionalCost);
         }
       }
     }
@@ -305,7 +318,7 @@
     }
     
     setupFormSubmitHandlers() {
-      const forms = document.querySelectorAll('form[action*="/cart/add"], form.f8pr');
+      const forms = document.querySelectorAll('form[action*="/cart/add"], form.f8pr, form[action*="/cart"]');
       
       forms.forEach(form => {
         form.addEventListener('submit', (e) => {
@@ -313,7 +326,20 @@
           this.fields.forEach(field => {
             this.updateFormProperties(field.wrapper, field.config);
           });
-        });
+          
+          // Debug: Log all properties before submit
+          const formData = new FormData(form);
+          const properties = {};
+          for (let [key, value] of formData.entries()) {
+            if (key.startsWith('properties[')) {
+              const propKey = key.replace('properties[', '').replace(']', '');
+              properties[propKey] = value;
+            }
+          }
+          if (Object.keys(properties).length > 0) {
+            console.log('Product Extra Fields: Properties vor Submit:', properties);
+          }
+        }, { capture: true });
       });
     }
     
