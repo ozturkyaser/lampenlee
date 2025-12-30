@@ -114,7 +114,7 @@
     });
     
     // Update price per unit field and additional cost property before form submit
-    const productForms = document.querySelectorAll('form[action*="/cart/add"]');
+    const productForms = document.querySelectorAll('form[action*="/cart/add"], form.f8pr, form.form-card');
     productForms.forEach(function(form) {
       form.addEventListener('submit', function(e) {
         updatePricePerUnitField();
@@ -141,6 +141,12 @@
               costInput.name = 'properties[_Zusätzliche Kosten]';
               costInput.value = additionalCost;
               form.appendChild(costInput);
+            }
+          } else {
+            // Remove property if length is 0 or price per unit is 0
+            const existingCostInput = form.querySelector('input[name="properties[_Zusätzliche Kosten]"]');
+            if (existingCostInput) {
+              existingCostInput.remove();
             }
           }
         });
