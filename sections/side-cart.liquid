@@ -110,10 +110,12 @@
                   assign length_value_side = property.last | times: 1
                 elsif property.first == '_Preis pro Einheit'
                   assign price_per_unit_value_side = property.last | times: 1
+                elsif property.first == '_Zusätzliche Kosten'
+                  assign additional_cost_side = property.last | times: 1 | times: line_item.quantity
                 endif
               endfor
               
-              if length_value_side > 0 and price_per_unit_value_side > 0
+              if additional_cost_side == 0 and length_value_side > 0 and price_per_unit_value_side > 0
                 assign additional_cost_side = length_value_side | times: price_per_unit_value_side | times: line_item.quantity
               endif
             -%}
