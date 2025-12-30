@@ -47,6 +47,7 @@
     {{ 'screen-settings.css' | asset_url | stylesheet_tag: media: 'screen' }}
     {{ 'sidebar-navigation.css' | asset_url | stylesheet_tag: media: 'screen' }}
     {{ 'custom-length-field.css' | asset_url | stylesheet_tag: media: 'screen' }}
+    {{ 'product-extra-fields.css' | asset_url | stylesheet_tag: media: 'screen' }}
     <noscript><link rel="stylesheet" href="{{ 'async-menu.css' | asset_url }}"></noscript>
     {%- if template.name == 'blog' or template.name == 'article' -%}
       <link media="screen" rel="stylesheet" href="{{ 'page-blog.css' | asset_url }}" id="blog-css">
@@ -228,6 +229,9 @@
     <script defer src="{{ 'custom.js' | asset_url }}"></script>
     <script defer src="{{ 'sidebar-navigation.js' | asset_url }}"></script>
     <script defer src="{{ 'custom-length-field.js' | asset_url }}"></script>
+    {%- if template.name == 'product' -%}
+      <script defer src="{{ 'product-extra-fields.js' | asset_url }}"></script>
+    {%- endif -%}
     {%- if template.name == 'collection' or template.name == 'search' -%}
       <script defer src="{{ 'page-collection.js' | asset_url }}"></script>
     {%- endif -%}
