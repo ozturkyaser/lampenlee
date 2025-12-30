@@ -18,6 +18,27 @@
     "main-product": {
       "type": "main-product",
       "blocks": {
+        "custom_length_field_qDnK4t": {
+          "type": "custom_length_field",
+          "settings": {
+            "enable_for_all_products": false,
+            "enable_for_collection": "",
+            "field_label": "Länge der Stange (cm)",
+            "placeholder": "Bitte Länge eingeben",
+            "unit": "cm",
+            "min_length": 1,
+            "max_length": 1000,
+            "step": 1,
+            "default_length": 0,
+            "price_per_unit": 0,
+            "show_price_calculation": true,
+            "base_price_label": "Grundpreis",
+            "length_price_label": "+ Länge",
+            "total_price_label": "= Gesamt",
+            "show_additional_cost_in_cart": true,
+            "checkout_handling": "property"
+          }
+        },
         "c7259cb9-7235-4028-b6df-3a68077fed80": {
           "type": "title",
           "settings": {
@@ -79,7 +100,7 @@
             "length_price_label": "+ Länge",
             "total_price_label": "= Gesamt",
             "show_additional_cost_in_cart": true,
-            "checkout_handling": "property"
+            "checkout_handling": "both"
           }
         },
         "inventory": {
@@ -146,6 +167,7 @@
         }
       },
       "block_order": [
+        "custom_length_field_qDnK4t",
         "c7259cb9-7235-4028-b6df-3a68077fed80",
         "short_description",
         "90724a70-740a-4cc9-984c-764e1d76a5bd",
