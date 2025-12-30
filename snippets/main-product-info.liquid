@@ -665,15 +665,26 @@
       {%- when 'custom_length_field' -%}
         {%- liquid
           assign show_length_field = false
-          if block.settings.enable_for_collection != blank
+          assign product_title_lower = product.title | downcase
+          
+          if block.settings.enable_for_all_products
+            assign show_length_field = true
+          elsif block.settings.enable_for_collection != blank
             for collection in product.collections
               if collection.handle == block.settings.enable_for_collection
                 assign show_length_field = true
                 break
               endif
             endfor
-          elsif block.settings.enable_for_all_products
-            assign show_length_field = true
+          elsif block.settings.enable_for_product_names != blank
+            assign product_name_keywords = block.settings.enable_for_product_names | downcase | split: ','
+            for keyword in product_name_keywords
+              assign keyword_trimmed = keyword | strip
+              if product_title_lower contains keyword_trimmed
+                assign show_length_field = true
+                break
+              endif
+            endfor
           endif
         -%}
         {%- if show_length_field -%}
