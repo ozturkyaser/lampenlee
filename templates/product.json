@@ -18,25 +18,6 @@
     "main-product": {
       "type": "main-product",
       "blocks": {
-        "custom_length_field_aDEbez": {
-          "type": "custom_length_field",
-          "settings": {
-            "enable_for_all_products": true,
-            "enable_for_collection": "",
-            "field_label": "Länge der Kette (cm)",
-            "placeholder": "Bitte Länge eingeben",
-            "unit": "cm",
-            "min_length": 10,
-            "max_length": 1000,
-            "step": 5,
-            "default_length": 0,
-            "price_per_unit": 100,
-            "show_price_calculation": true,
-            "base_price_label": "Grundpreis",
-            "length_price_label": "+ Länge",
-            "total_price_label": "= Gesamt"
-          }
-        },
         "c7259cb9-7235-4028-b6df-3a68077fed80": {
           "type": "title",
           "settings": {
@@ -78,6 +59,25 @@
             "show_unavailable_variants": true,
             "show_single_options": false,
             "enable_selling_plans": true
+          }
+        },
+        "custom_length_field_aDEbez": {
+          "type": "custom_length_field",
+          "settings": {
+            "enable_for_all_products": true,
+            "enable_for_collection": "",
+            "field_label": "Länge der Kette (cm)",
+            "placeholder": "Bitte Länge eingeben",
+            "unit": "cm",
+            "min_length": 10,
+            "max_length": 1000,
+            "step": 5,
+            "default_length": 0,
+            "price_per_unit": 100,
+            "show_price_calculation": true,
+            "base_price_label": "Grundpreis",
+            "length_price_label": "+ Länge",
+            "total_price_label": "= Gesamt"
           }
         },
         "inventory": {
@@ -144,11 +144,11 @@
         }
       },
       "block_order": [
-        "custom_length_field_aDEbez",
         "c7259cb9-7235-4028-b6df-3a68077fed80",
         "short_description",
         "90724a70-740a-4cc9-984c-764e1d76a5bd",
         "variant_selection",
+        "custom_length_field_aDEbez",
         "inventory",
         "price",
         "buy_button",
