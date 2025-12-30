@@ -1,0 +1,124 @@
+{% comment %}
+  Extra Field Block für Theme Integration
+  Zeigt zusätzliche Felder auf der Produktseite an
+{% endcomment %}
+
+{%- liquid
+  assign extra_fields_config = product.metafields.extra_fields.config
+  assign has_extra_fields = false
+  assign fields = blank
+  
+  if extra_fields_config and extra_fields_config.value
+    assign fields_json = extra_fields_config.value
+    assign fields_data = fields_json | parse_json
+    if fields_data.fields
+      assign fields = fields_data.fields
+      assign has_extra_fields = true
+    endif
+  endif
+-%}
+
+{%- if has_extra_fields and fields.size > 0 -%}
+  <div class="product-extra-fields-app" data-product-id="{{ product.id }}">
+    {%- for field in fields -%}
+      {%- if field.enabled -%}
+        <div 
+          class="extra-field-wrapper" 
+          data-field-type="{{ field.type }}"
+          data-field-name="{{ field.name }}"
+          data-price-per-unit="{{ field.pricePerUnit | default: 0 }}"
+          data-min="{{ field.min | default: '' }}"
+          data-max="{{ field.max | default: '' }}"
+          data-step="{{ field.step | default: 1 }}"
+          data-unit="{{ field.unit | default: '' }}"
+          data-show-calculation="{{ field.showPriceCalculation | default: false }}"
+        >
+          <label for="extra-field-{{ field.name }}-{{ section.id }}" class="extra-field-label">
+            {{ field.label }}
+            {%- if field.required -%}<span style="color: red;">*</span>{%- endif -%}
+          </label>
+          
+          {%- case field.type -%}
+            {%- when 'number' -%}
+              <div class="field-input-wrapper">
+                <input
+                  type="number"
+                  id="extra-field-{{ field.name }}-{{ section.id }}"
+                  name="properties[{{ field.label }}]"
+                  class="extra-field-input"
+                  min="{{ field.min | default: '' }}"
+                  max="{{ field.max | default: '' }}"
+                  step="{{ field.step | default: 1 }}"
+                  value="{{ field.defaultValue | default: '' }}"
+                  placeholder="{{ field.placeholder | default: '' }}"
+                  {%- if field.required -%}required{%- endif -%}
+                >
+                {%- if field.unit -%}
+                  <span class="extra-field-unit">{{ field.unit }}</span>
+                {%- endif -%}
+              </div>
+              
+            {%- when 'text' -%}
+              <input
+                type="text"
+                id="extra-field-{{ field.name }}-{{ section.id }}"
+                name="properties[{{ field.label }}]"
+                class="extra-field-input"
+                value="{{ field.defaultValue | default: '' }}"
+                placeholder="{{ field.placeholder | default: '' }}"
+                {%- if field.required -%}required{%- endif -%}
+              >
+              
+            {%- when 'dropdown' -%}
+              <select
+                id="extra-field-{{ field.name }}-{{ section.id }}"
+                name="properties[{{ field.label }}]"
+                class="extra-field-input"
+                {%- if field.required -%}required{%- endif -%}
+              >
+                <option value="">Bitte wählen...</option>
+                {%- for option in field.options -%}
+                  <option value="{{ option }}">{{ option }}</option>
+                {%- endfor -%}
+              </select>
+              
+            {%- when 'checkbox' -%}
+              <label style="display: flex; align-items: center; gap: 0.5rem;">
+                <input
+                  type="checkbox"
+                  id="extra-field-{{ field.name }}-{{ section.id }}"
+                  name="properties[{{ field.label }}]"
+                  class="extra-field-input"
+                  value="Ja"
+                  {%- if field.required -%}required{%- endif -%}
+                >
+                <span>{{ field.label }}</span>
+              </label>
+          {%- endcase -%}
+          
+          {%- if field.showPriceCalculation and field.pricePerUnit > 0 -%}
+            <div class="extra-field-price-calculation" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">
+              <span class="additional-price-label">Zusätzliche Kosten: </span>
+              <span class="additional-price-value">0,00 €</span>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+  
+  <script src="{{ 'extra-field-app.js' | asset_url }}" defer></script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Extra Fields",
+  "target": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Extra Fields werden automatisch aus den Produkt-Metafields geladen. Konfigurieren Sie die Felder in der App."
+    }
+  ]
+}
+{% endschema %}

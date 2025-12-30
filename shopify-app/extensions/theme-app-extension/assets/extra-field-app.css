@@ -1,0 +1,62 @@
+/**
+ * Extra Fields App - Storefront Styles
+ */
+
+.product-extra-fields-app {
+  margin: 20px 0;
+}
+
+.extra-field-wrapper {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.extra-field-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.field-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.extra-field-input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.extra-field-input:focus {
+  outline: none;
+  border-color: #008060;
+  box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.1);
+}
+
+.extra-field-unit {
+  font-size: 0.9rem;
+  color: #666;
+  white-space: nowrap;
+}
+
+.extra-field-price-calculation {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #e0e0e0;
+  font-size: 0.9rem;
+}
+
+.additional-price-value {
+  font-weight: 600;
+  color: #008060;
+}
