@@ -5086,6 +5086,32 @@ var ajaxCart = (function (module) {
 			form.addEventListener('submit', function (e) {
 				new_css('form-validation-css', validation_css);
 
+				// Update additional cost property before AJAX call
+				const lengthInputs = form.querySelectorAll('.custom-length-input');
+				lengthInputs.forEach(function(input) {
+					const length = parseFloat(input.value) || 0;
+					const pricePerUnit = parseFloat(input.dataset.pricePerUnit) || 0;
+					
+					if (length > 0 && pricePerUnit > 0) {
+						const additionalCost = Math.round(length * pricePerUnit);
+						
+						// Remove existing additional cost property if exists
+						const existingCostInput = form.querySelector('input[name="properties[_Zusätzliche Kosten]"]');
+						if (existingCostInput) {
+							existingCostInput.remove();
+						}
+						
+						// Add additional cost as property
+						if (additionalCost > 0) {
+							const costInput = document.createElement('input');
+							costInput.type = 'hidden';
+							costInput.name = 'properties[_Zusätzliche Kosten]';
+							costInput.value = additionalCost;
+							form.appendChild(costInput);
+						}
+					}
+				});
+
 				form.classList.add('processing');
 
 				processLinkedForm(form, 'add');
