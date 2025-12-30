@@ -164,6 +164,7 @@
                           assign additional_cost = length_value | times: price_per_unit_value | times: line_item.quantity
                         endif
                       -%}
+                      {%- comment -%}Debug: length={{ length_value }}, price_per_unit={{ price_per_unit_value }}, additional_cost={{ additional_cost }}{%- endcomment -%}
                       {%- if line_item.variant.compare_at_price > line_item.variant.price -%}
                         <span class="old-price">
                           {{- line_item.variant.compare_at_price | times: line_item.quantity | money -}}</span

@@ -86,6 +86,34 @@
     });
   }
   
+  // Update additional cost property in form (wird sofort beim Input-Change gesetzt)
+  function updateAdditionalCostProperty(input) {
+    const form = input.closest('form');
+    if (!form) return;
+    
+    const length = parseFloat(input.value) || 0;
+    const pricePerUnit = parseFloat(input.dataset.pricePerUnit) || 0;
+    
+    // Remove existing additional cost property if exists
+    const existingCostInput = form.querySelector('input[name="properties[_Zusätzliche Kosten]"]');
+    if (existingCostInput) {
+      existingCostInput.remove();
+    }
+    
+    if (length > 0 && pricePerUnit > 0) {
+      const additionalCost = Math.round(length * pricePerUnit);
+      
+      // Add additional cost as property
+      if (additionalCost > 0) {
+        const costInput = document.createElement('input');
+        costInput.type = 'hidden';
+        costInput.name = 'properties[_Zusätzliche Kosten]';
+        costInput.value = additionalCost;
+        form.appendChild(costInput);
+      }
+    }
+  }
+  
   // Initialize on page load
   document.addEventListener('DOMContentLoaded', function() {
     const lengthInputs = document.querySelectorAll('.custom-length-input');
@@ -95,10 +123,12 @@
       input.addEventListener('input', function() {
         updatePrice();
         updatePricePerUnitField();
+        updateAdditionalCostProperty(input);
       });
       input.addEventListener('change', function() {
         updatePrice();
         updatePricePerUnitField();
+        updateAdditionalCostProperty(input);
       });
       
       // Update on variant change
@@ -108,6 +138,7 @@
           setTimeout(function() {
             updatePrice();
             updatePricePerUnitField();
+            updateAdditionalCostProperty(input);
           }, 100);
         });
       });
@@ -116,39 +147,14 @@
     // Update price per unit field and additional cost property before form submit
     const productForms = document.querySelectorAll('form[action*="/cart/add"], form.f8pr, form.form-card');
     productForms.forEach(function(form) {
+      // Update on submit (als Backup)
       form.addEventListener('submit', function(e) {
         updatePricePerUnitField();
         
         // Calculate and store additional cost as property
         const lengthInputs = form.querySelectorAll('.custom-length-input');
         lengthInputs.forEach(function(input) {
-          const length = parseFloat(input.value) || 0;
-          const pricePerUnit = parseFloat(input.dataset.pricePerUnit) || 0;
-          
-          if (length > 0 && pricePerUnit > 0) {
-            const additionalCost = Math.round(length * pricePerUnit);
-            
-            // Remove existing additional cost property if exists
-            const existingCostInput = form.querySelector('input[name="properties[_Zusätzliche Kosten]"]');
-            if (existingCostInput) {
-              existingCostInput.remove();
-            }
-            
-            // Add additional cost as property
-            if (additionalCost > 0) {
-              const costInput = document.createElement('input');
-              costInput.type = 'hidden';
-              costInput.name = 'properties[_Zusätzliche Kosten]';
-              costInput.value = additionalCost;
-              form.appendChild(costInput);
-            }
-          } else {
-            // Remove property if length is 0 or price per unit is 0
-            const existingCostInput = form.querySelector('input[name="properties[_Zusätzliche Kosten]"]');
-            if (existingCostInput) {
-              existingCostInput.remove();
-            }
-          }
+          updateAdditionalCostProperty(input);
         });
       });
     });
@@ -156,6 +162,11 @@
     // Initial update
     updatePrice();
     updatePricePerUnitField();
+    
+    // Initial update für alle Inputs
+    lengthInputs.forEach(function(input) {
+      updateAdditionalCostProperty(input);
+    });
   });
   
   // Listen for variant changes via custom events
@@ -163,6 +174,10 @@
     setTimeout(function() {
       updatePrice();
       updatePricePerUnitField();
+      const lengthInputs = document.querySelectorAll('.custom-length-input');
+      lengthInputs.forEach(function(input) {
+        updateAdditionalCostProperty(input);
+      });
     }, 100);
   });
   
@@ -175,6 +190,10 @@
         setTimeout(function() {
           updatePrice();
           updatePricePerUnitField();
+          const lengthInputs = document.querySelectorAll('.custom-length-input');
+          lengthInputs.forEach(function(input) {
+            updateAdditionalCostProperty(input);
+          });
         }, 100);
       };
     }
