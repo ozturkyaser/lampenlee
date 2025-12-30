@@ -107,7 +107,9 @@
               
               for property in line_item.properties
                 if property.first == 'Länge'
-                  assign length_value_side = property.last | times: 1
+                  assign length_value_side = property.last
+                  # Extract numeric value from string (remove unit)
+                  assign length_numeric_side = property.last | remove: 'cm' | remove: 'm' | remove: ' ' | times: 1
                 elsif property.first == '_Preis pro Einheit'
                   assign price_per_unit_value_side = property.last | times: 1
                 elsif property.first == '_Zusätzliche Kosten'
@@ -115,8 +117,9 @@
                 endif
               endfor
               
-              if additional_cost_side == 0 and length_value_side > 0 and price_per_unit_value_side > 0
-                assign additional_cost_side = length_value_side | times: price_per_unit_value_side | times: line_item.quantity
+              # Calculate additional cost if not set directly
+              if additional_cost_side == 0 and length_numeric_side > 0 and price_per_unit_value_side > 0
+                assign additional_cost_side = length_numeric_side | times: price_per_unit_value_side | times: line_item.quantity
               endif
             -%}
             {{ line_item.final_line_price | money }}{% if additional_cost_side > 0 %} <span class="additional-cost">+ {{ additional_cost_side | money }}</span>{% endif %}
@@ -147,10 +150,13 @@
                 assign length_value_side_display = 0
                 assign price_per_unit_side_display = 0
                 assign additional_cost_side_display = 0
+                assign length_numeric_side_display = 0
                 
                 for property in line_item.properties
                   if property.first == 'Länge'
                     assign length_value_side_display = property.last
+                    # Extract numeric value from string (remove unit)
+                    assign length_numeric_side_display = property.last | remove: 'cm' | remove: 'm' | remove: ' ' | times: 1
                   elsif property.first == '_Preis pro Einheit'
                     assign price_per_unit_side_display = property.last | times: 1
                   elsif property.first == '_Zusätzliche Kosten'
@@ -158,12 +164,13 @@
                   endif
                 endfor
                 
-                if additional_cost_side_display == 0 and length_value_side_display != blank and price_per_unit_side_display > 0
-                  assign length_numeric_side = length_value_side_display | remove: 'cm' | remove: 'm' | remove: ' ' | times: 1
-                  if length_numeric_side > 0
-                    assign additional_cost_side_display = length_numeric_side | times: price_per_unit_side_display
-                  endif
+                # Calculate additional cost if not set directly
+                if additional_cost_side_display == 0 and length_numeric_side_display > 0 and price_per_unit_side_display > 0
+                  assign additional_cost_side_display = length_numeric_side_display | times: price_per_unit_side_display
                 endif
+                
+                # Multiply by quantity for total line cost
+                assign additional_cost_side_display = additional_cost_side_display | times: line_item.quantity
               -%}
               {%- for property in line_item.properties -%}
                 {%- liquid
@@ -366,11 +373,42 @@
       {%- endif -%}
     </ul>
   {%- endif -%}
+  {%- liquid
+    assign total_additional_costs_side = 0
+    for line_item in cart.items
+      assign line_additional_cost_side = 0
+      for property in line_item.properties
+        if property.first == '_Zusätzliche Kosten'
+          assign line_additional_cost_side = property.last | times: 1 | times: line_item.quantity
+          assign total_additional_costs_side = total_additional_costs_side | plus: line_additional_cost_side
+        elsif property.first == 'Länge'
+          assign length_val_side = property.last | remove: 'cm' | remove: 'm' | remove: ' ' | times: 1
+          for prop in line_item.properties
+            if prop.first == '_Preis pro Einheit'
+              assign price_per_unit_side = prop.last | times: 1
+              if length_val_side > 0 and price_per_unit_side > 0
+                assign calculated_cost_side = length_val_side | times: price_per_unit_side | times: line_item.quantity
+                assign total_additional_costs_side = total_additional_costs_side | plus: calculated_cost_side
+              endif
+              break
+            endif
+          endfor
+        endif
+      endfor
+    endfor
+    assign cart_total_with_extras_side = cart.total_price | plus: total_additional_costs_side
+  -%}
   <div class="sticky-in-panel">
     <ul class="l4tt m15">
       <li>
         <span>{{ 'cart.total_products' | t }} ({{ cart.item_count }})</span> {{ cart.items_subtotal_price | money }}
       </li>
+      {%- if total_additional_costs_side > 0 -%}
+        <li>
+          <span>Zusätzliche Kosten:</span>
+          {{ total_additional_costs_side | money }}
+        </li>
+      {%- endif -%}
       {%- if cart.cart_level_discount_applications.size > 0 -%}
         {%- for discount in cart.cart_level_discount_applications -%}
           <li class="overlay-gray">
@@ -396,7 +434,7 @@
             {{- 'cart.total_excluding_tax' | t -}}
           {%- endif -%}
         </span>
-        {{- cart.total_price | money }}
+        {{- cart_total_with_extras_side | money }}
       </li>
     </ul>
     {%- if settings.cart_drawer_discount_tab or settings.cart_drawer_order_notes -%}

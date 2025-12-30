@@ -5318,8 +5318,47 @@ var ajaxCart = (function (module) {
 					window.ProductExtraFields.updateFormProperties(field.wrapper, field.config);
 				});
 			}
+			// Also update old custom-length-field properties for compatibility
+			const lengthInputs = form.querySelectorAll('.custom-length-input');
+			lengthInputs.forEach(function(input) {
+				const length = parseFloat(input.value) || 0;
+				const pricePerUnit = parseFloat(input.dataset.pricePerUnit) || parseFloat(input.closest('[data-price-per-unit]')?.dataset.pricePerUnit) || 0;
+				
+				if (length > 0 && pricePerUnit > 0) {
+					const additionalCost = Math.round(length * pricePerUnit);
+					
+					// Remove existing additional cost property if exists
+					const existingCostInput = form.querySelector('input[name="properties[_Zusätzliche Kosten]"]');
+					if (existingCostInput) {
+						existingCostInput.remove();
+					}
+					
+					// Add additional cost as property
+					if (additionalCost > 0) {
+						const costInput = document.createElement('input');
+						costInput.type = 'hidden';
+						costInput.name = 'properties[_Zusätzliche Kosten]';
+						costInput.value = additionalCost;
+						form.appendChild(costInput);
+						console.log('Custom Length Field: Zusätzliche Kosten Property hinzugefügt:', additionalCost, 'Cent');
+					}
+				}
+			});
+			
 			formData = new FormData(form);
 			formData.append('sections', sectionsToFetch);
+			
+			// Debug: Log all properties before submit
+			const allProperties = {};
+			for (let [key, value] of formData.entries()) {
+				if (key.startsWith('properties[')) {
+					const propKey = key.replace('properties[', '').replace(']', '');
+					allProperties[propKey] = value;
+				}
+			}
+			if (Object.keys(allProperties).length > 0) {
+				console.log('AJAX Cart: Alle Properties vor Submit:', allProperties);
+			}
 			config = {
 				method: 'POST',
 				body: formData,
