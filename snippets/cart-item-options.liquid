@@ -85,15 +85,46 @@
                 assign additional_cost = length_value | times: price_per_unit_value
             endif
         -%}
+        {%- liquid
+            assign shown_any_property = false
+            for property in line_item.properties
+                assign skip_this_property = false
+                if property.first.first == '_'
+                    assign skip_this_property = true
+                elsif property.last == blank
+                    assign skip_this_property = true
+                elsif property.first == '_Preis pro Einheit'
+                    assign skip_this_property = true
+                elsif property.first == '_Zusätzliche Kosten'
+                    assign skip_this_property = true
+                endif
+                unless skip_this_property
+                    assign shown_any_property = true
+                endunless
+            endfor
+        -%}
         {%- for property in line_item.properties -%}
-            {%- assign shown_options = true -%}
-            {%- if property.first.first == '_' or property.last == blank -%}{%- continue -%}{%- endif -%}
-            {%- if property.first == 'Länge' -%}
-                {{ property.first }}:&nbsp;{{ property.last }}{% if additional_cost > 0 %} (+ {{ additional_cost | money }}){% endif %}
-            {%- else -%}
-                {{ property.first }}:&nbsp;{% if property.last contains '/uploads/' %}<a href="{{ property.last }}">{{ property.last | split: '/' | last }}</a>{% else %}{{ property.last }}{% endif %}
-            {%- endif -%}
-            {% unless forloop.last %}&nbsp;/&nbsp;{% endunless %}
+            {%- liquid
+                assign skip_this_property = false
+                if property.first.first == '_'
+                    assign skip_this_property = true
+                elsif property.last == blank
+                    assign skip_this_property = true
+                elsif property.first == '_Preis pro Einheit'
+                    assign skip_this_property = true
+                elsif property.first == '_Zusätzliche Kosten'
+                    assign skip_this_property = true
+                endif
+            -%}
+            {%- unless skip_this_property -%}
+                {%- assign shown_options = true -%}
+                {%- if property.first == 'Länge' -%}
+                    <strong>{{ property.first }}:</strong>&nbsp;{{ property.last }}{% if additional_cost > 0 %} <span class="additional-cost-info">(+ {{ additional_cost | money }})</span>{% endif %}
+                {%- else -%}
+                    <strong>{{ property.first }}:</strong>&nbsp;{% if property.last contains '/uploads/' %}<a href="{{ property.last }}">{{ property.last | split: '/' | last }}</a>{% else %}{{ property.last }}{% endif %}
+                {%- endif -%}
+                {% unless forloop.last %}&nbsp;/&nbsp;{% endunless %}
+            {%- endunless -%}
         {%- endfor -%}
         {% if origin == 'cartpanel' and list %}
             {%- for discount_allocation in line_item.line_level_discount_allocations -%}
