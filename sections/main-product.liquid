@@ -1900,12 +1900,6 @@
           "info": "Geben Sie den Collection-Handle ein (z.B. 'lampen'), für den dieses Feld aktiviert werden soll. Lassen Sie leer, wenn 'Für alle Produkte aktivieren' aktiviert ist."
         },
         {
-          "type": "text",
-          "id": "enable_for_product_names",
-          "label": "Produktnamen-Keywords",
-          "info": "Geben Sie Keywords ein, die im Produktnamen enthalten sein müssen (kommagetrennt, z.B. 'kette,ketten,chain'). Das Feld wird angezeigt, wenn der Produktname eines dieser Keywords enthält. Groß-/Kleinschreibung wird ignoriert."
-        },
-        {
           "type": "header",
           "content": "Feld-Einstellungen"
         },
@@ -1987,6 +1981,38 @@
           "id": "total_price_label",
           "label": "Gesamtpreis-Label",
           "default": " = Gesamt"
+        },
+        {
+          "type": "header",
+          "content": "Warenkorb & Checkout"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_additional_cost_in_cart",
+          "label": "Zusätzliche Kosten im Warenkorb anzeigen",
+          "default": true,
+          "info": "Zeigt die zusätzlichen Kosten (Länge × Preis pro Einheit) im Warenkorb an"
+        },
+        {
+          "type": "select",
+          "id": "checkout_handling",
+          "label": "Weitergabe an Checkout",
+          "options": [
+            {
+              "value": "property",
+              "label": "Als Property (empfohlen)"
+            },
+            {
+              "value": "note",
+              "label": "Als Bestellnotiz"
+            },
+            {
+              "value": "both",
+              "label": "Beides"
+            }
+          ],
+          "default": "property",
+          "info": "Wie sollen die zusätzlichen Kosten an den Checkout weitergegeben werden?"
         }
       ]
     }

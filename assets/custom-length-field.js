@@ -72,26 +72,58 @@
     });
   }
   
+  // Update price per unit hidden field when length changes
+  function updatePricePerUnitField() {
+    const lengthInputs = document.querySelectorAll('.custom-length-input');
+    
+    lengthInputs.forEach(function(input) {
+      const pricePerUnit = parseFloat(input.dataset.pricePerUnit) || 0;
+      const pricePerUnitField = input.closest('.custom-length-field-wrapper')?.querySelector('.custom-length-price-per-unit');
+      
+      if (pricePerUnitField) {
+        pricePerUnitField.value = pricePerUnit;
+      }
+    });
+  }
+  
   // Initialize on page load
   document.addEventListener('DOMContentLoaded', function() {
     const lengthInputs = document.querySelectorAll('.custom-length-input');
     
     lengthInputs.forEach(function(input) {
       // Update on input
-      input.addEventListener('input', updatePrice);
-      input.addEventListener('change', updatePrice);
+      input.addEventListener('input', function() {
+        updatePrice();
+        updatePricePerUnitField();
+      });
+      input.addEventListener('change', function() {
+        updatePrice();
+        updatePricePerUnitField();
+      });
       
       // Update on variant change
       const variantSelects = document.querySelectorAll('[name="id"], .product-variant-id');
       variantSelects.forEach(function(select) {
         select.addEventListener('change', function() {
-          setTimeout(updatePrice, 100);
+          setTimeout(function() {
+            updatePrice();
+            updatePricePerUnitField();
+          }, 100);
         });
+      });
+    });
+    
+    // Update price per unit field before form submit
+    const productForms = document.querySelectorAll('form[action*="/cart/add"]');
+    productForms.forEach(function(form) {
+      form.addEventListener('submit', function() {
+        updatePricePerUnitField();
       });
     });
     
     // Initial update
     updatePrice();
+    updatePricePerUnitField();
   });
   
   // Listen for variant changes via custom events
