@@ -66,6 +66,7 @@
           "settings": {
             "enable_for_all_products": true,
             "enable_for_collection": "",
+            "enable_for_product_names": "kette",
             "field_label": "Länge der Kette (cm)",
             "placeholder": "Bitte Länge eingeben",
             "unit": "cm",
