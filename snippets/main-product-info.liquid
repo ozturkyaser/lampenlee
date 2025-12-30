@@ -665,26 +665,15 @@
       {%- when 'custom_length_field' -%}
         {%- liquid
           assign show_length_field = false
-          assign product_title_lower = product.title | downcase
-          
-          if block.settings.enable_for_all_products
-            assign show_length_field = true
-          elsif block.settings.enable_for_collection != blank
+          if block.settings.enable_for_collection != blank
             for collection in product.collections
               if collection.handle == block.settings.enable_for_collection
                 assign show_length_field = true
                 break
               endif
             endfor
-          elsif block.settings.enable_for_product_names != blank
-            assign product_name_keywords = block.settings.enable_for_product_names | downcase | split: ','
-            for keyword in product_name_keywords
-              assign keyword_trimmed = keyword | strip
-              if product_title_lower contains keyword_trimmed
-                assign show_length_field = true
-                break
-              endif
-            endfor
+          elsif block.settings.enable_for_all_products
+            assign show_length_field = true
           endif
         -%}
         {%- if show_length_field -%}
@@ -702,6 +691,13 @@
               step="{{ block.settings.step | default: 1 }}"
               value="{{ block.settings.default_length | default: '' }}"
               placeholder="{{ block.settings.placeholder | default: 'Bitte Länge eingeben' }}"
+              data-price-per-unit="{{ block.settings.price_per_unit | default: 0 }}"
+            >
+            <input
+              type="hidden"
+              name="properties[_Preis pro Einheit]"
+              class="custom-length-price-per-unit"
+              value="{{ block.settings.price_per_unit | default: 0 }}"
             >
             <span class="custom-length-unit">{{ block.settings.unit | default: 'cm' }}</span>
             {%- if block.settings.show_price_calculation -%}

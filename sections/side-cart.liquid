@@ -100,7 +100,24 @@
               <span class="old-price">{{ line_item.variant.compare_at_price | times: line_item.quantity | money }}</span
               >&nbsp;
             {%- endif -%}
-            {{ line_item.final_line_price | money }}
+            {%- liquid
+              assign length_value_side = 0
+              assign price_per_unit_value_side = 0
+              assign additional_cost_side = 0
+              
+              for property in line_item.properties
+                if property.first == 'Länge'
+                  assign length_value_side = property.last | times: 1
+                elsif property.first == '_Preis pro Einheit'
+                  assign price_per_unit_value_side = property.last | times: 1
+                endif
+              endfor
+              
+              if length_value_side > 0 and price_per_unit_value_side > 0
+                assign additional_cost_side = length_value_side | times: price_per_unit_value_side | times: line_item.quantity
+              endif
+            -%}
+            {{ line_item.final_line_price | money }}{% if additional_cost_side > 0 %} <span class="additional-cost">+ {{ additional_cost_side | money }}</span>{% endif %}
           </p>
         </div>
         {% if line_item.item_components.size == 0 %}

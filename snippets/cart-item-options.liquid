@@ -60,10 +60,35 @@
             {{ line_item.selling_plan_allocation.selling_plan.name }}
         {%- endif -%}
         {% if line_item.properties.size > 0 and slash -%}&nbsp;/&nbsp;{%- endif -%}
+        {%- liquid
+            assign length_property = null
+            assign price_per_unit_property = null
+            assign length_value = 0
+            assign price_per_unit_value = 0
+            assign additional_cost = 0
+            
+            for property in line_item.properties
+                if property.first == 'Länge'
+                    assign length_property = property
+                    assign length_value = property.last | times: 1
+                elsif property.first == '_Preis pro Einheit'
+                    assign price_per_unit_property = property
+                    assign price_per_unit_value = property.last | times: 1
+                endif
+            endfor
+            
+            if length_value > 0 and price_per_unit_value > 0
+                assign additional_cost = length_value | times: price_per_unit_value
+            endif
+        -%}
         {%- for property in line_item.properties -%}
             {%- assign shown_options = true -%}
             {%- if property.first.first == '_' or property.last == blank -%}{%- continue -%}{%- endif -%}
-            {{ property.first }}:&nbsp;{% if property.last contains '/uploads/' %}<a href="{{ property.last }}">{{ property.last | split: '/' | last }}</a>{% else %}{{ property.last }}{% endif %}
+            {%- if property.first == 'Länge' -%}
+                {{ property.first }}:&nbsp;{{ property.last }}{% if price_per_unit_value > 0 %} ({{ additional_cost | money }}){% endif %}
+            {%- else -%}
+                {{ property.first }}:&nbsp;{% if property.last contains '/uploads/' %}<a href="{{ property.last }}">{{ property.last | split: '/' | last }}</a>{% else %}{{ property.last }}{% endif %}
+            {%- endif -%}
             {% unless forloop.last %}&nbsp;/&nbsp;{% endunless %}
         {%- endfor -%}
         {% if origin == 'cartpanel' and list %}
