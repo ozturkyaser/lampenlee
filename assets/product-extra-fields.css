@@ -1,0 +1,118 @@
+/**
+ * Product Extra Fields Styles
+ */
+
+.product-extra-field {
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid var(--custom_bd, #e0e0e0);
+  border-radius: 4px;
+  background: var(--primary_bg, #fff);
+}
+
+.product-extra-field label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--primary_text_h, #333);
+  font-size: 0.95rem;
+}
+
+.field-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.product-extra-field input[type="number"],
+.product-extra-field input[type="text"] {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid var(--custom_bd, #e0e0e0);
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.product-extra-field input[type="number"]:focus,
+.product-extra-field input[type="text"]:focus {
+  outline: none;
+  border-color: var(--accent, #007bff);
+  box-shadow: 0 0 0 3px rgba(var(--accent_rgb, 0, 123, 255), 0.1);
+}
+
+.product-extra-field input.has-error {
+  border-color: #dc3545;
+}
+
+.product-extra-field .field-error {
+  display: block;
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 5px;
+}
+
+.custom-length-unit {
+  font-size: 0.9rem;
+  color: var(--primary_text, #666);
+  white-space: nowrap;
+}
+
+.custom-length-price-info {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid var(--custom_bd, #e0e0e0);
+}
+
+.price-calculation-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.price-calculation-row.total {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--custom_bd, #e0e0e0);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.price-calculation-row .base-price-label,
+.price-calculation-row .length-price-label,
+.price-calculation-row .total-price-label {
+  color: var(--primary_text, #666);
+}
+
+.price-calculation-row .base-price-value,
+.price-calculation-row .additional-price-value,
+.price-calculation-row .total-price-value {
+  color: var(--primary_text_h, #333);
+  font-weight: 500;
+}
+
+.price-calculation-row.total .total-price-value {
+  color: var(--accent, #007bff);
+  font-size: 1.1rem;
+}
+
+/* Mobile Responsive */
+@media only screen and (max-width: 47.5em) {
+  .product-extra-field {
+    margin: 15px 0;
+    padding: 12px;
+  }
+  
+  .field-input-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .custom-length-unit {
+    margin-top: 5px;
+    text-align: right;
+  }
+}

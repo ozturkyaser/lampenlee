@@ -665,6 +665,14 @@
       {%- when 'custom_length_field' -%}
         {%- liquid
           assign show_length_field = false
+          
+          # Prüfe Metafield für produkt-spezifische Aktivierung
+          assign field_enabled_metafield = product.metafields.custom.extra_field_enabled
+          if field_enabled_metafield == true
+            assign show_length_field = true
+          endif
+          
+          # Prüfe Collection-basierte Aktivierung
           if block.settings.enable_for_collection != blank
             for collection in product.collections
               if collection.handle == block.settings.enable_for_collection
@@ -675,39 +683,81 @@
           elsif block.settings.enable_for_all_products
             assign show_length_field = true
           endif
+          
+          # Metafield-Werte überschreiben Block-Settings (falls vorhanden)
+          assign field_label = block.settings.field_label | default: 'Länge der Stange (cm)'
+          assign field_unit = block.settings.unit | default: 'cm'
+          assign field_min = block.settings.min_length | default: 1
+          assign field_max = block.settings.max_length | default: 1000
+          assign field_step = block.settings.step | default: 1
+          assign field_default = block.settings.default_length | default: ''
+          assign field_placeholder = block.settings.placeholder | default: 'Bitte Länge eingeben'
+          assign price_per_unit = block.settings.price_per_unit | default: 0
+          
+          # Metafield-Überschreibungen
+          if product.metafields.custom.field_label != blank
+            assign field_label = product.metafields.custom.field_label
+          endif
+          if product.metafields.custom.field_unit != blank
+            assign field_unit = product.metafields.custom.field_unit
+          endif
+          if product.metafields.custom.field_min != blank
+            assign field_min = product.metafields.custom.field_min
+          endif
+          if product.metafields.custom.field_max != blank
+            assign field_max = product.metafields.custom.field_max
+          endif
+          if product.metafields.custom.price_per_unit != blank
+            assign price_per_unit = product.metafields.custom.price_per_unit
+          endif
         -%}
         {%- if show_length_field -%}
-          <div class="custom-length-field-wrapper" {{ block.shopify_attributes }} data-price-per-unit="{{ block.settings.price_per_unit | default: 0 }}" data-base-price="{{ current_variant.price }}">
+          <div 
+            class="custom-length-field-wrapper product-extra-field" 
+            {{ block.shopify_attributes }} 
+            data-extra-field="length"
+            data-field-id="length-{{ section.id }}"
+            data-price-per-unit="{{ price_per_unit }}"
+            data-base-price="{{ current_variant.price }}"
+            data-min="{{ field_min }}"
+            data-max="{{ field_max }}"
+            data-step="{{ field_step }}"
+            data-unit="{{ field_unit }}"
+            data-property-name="Länge"
+            data-show-calculation="{{ block.settings.show_price_calculation | default: true }}"
+          >
             <label for="custom-length-{{ section.id }}" class="custom-length-label">
-              {{ block.settings.field_label | default: 'Länge der Stange (cm)' }}
+              {{ field_label }}
             </label>
-            <input
-              type="number"
-              id="custom-length-{{ section.id }}"
-              name="properties[Länge]"
-              class="custom-length-input"
-              min="{{ block.settings.min_length | default: 1 }}"
-              max="{{ block.settings.max_length | default: 1000 }}"
-              step="{{ block.settings.step | default: 1 }}"
-              value="{{ block.settings.default_length | default: '' }}"
-              placeholder="{{ block.settings.placeholder | default: 'Bitte Länge eingeben' }}"
-              data-price-per-unit="{{ block.settings.price_per_unit | default: 0 }}"
-            >
-            <span class="custom-length-unit">{{ block.settings.unit | default: 'cm' }}</span>
-            <input
-              type="hidden"
-              name="properties[_Preis pro Einheit]"
-              class="custom-length-price-per-unit"
-              value="{{ block.settings.price_per_unit | default: 0 }}"
-            >
+            <div class="field-input-wrapper">
+              <input
+                type="number"
+                id="custom-length-{{ section.id }}"
+                name="properties[Länge]"
+                class="custom-length-input"
+                min="{{ field_min }}"
+                max="{{ field_max }}"
+                step="{{ field_step }}"
+                value="{{ field_default }}"
+                placeholder="{{ field_placeholder }}"
+                required
+              >
+              <span class="custom-length-unit">{{ field_unit }}</span>
+            </div>
             {%- if block.settings.show_price_calculation -%}
               <div class="custom-length-price-info">
-                <span class="base-price-label">{{ block.settings.base_price_label | default: 'Grundpreis' }}: </span>
-                <span class="base-price-value">{{ current_variant.price | money }}</span>
-                <span class="length-price-label">{{ block.settings.length_price_label | default: ' + Länge' }}: </span>
-                <span class="length-price-value">0,00 €</span>
-                <span class="total-price-label">{{ block.settings.total_price_label | default: ' = Gesamt' }}: </span>
-                <span class="total-price-value">{{ current_variant.price | money }}</span>
+                <div class="price-calculation-row">
+                  <span class="base-price-label">{{ block.settings.base_price_label | default: 'Grundpreis' }}: </span>
+                  <span class="base-price-value">{{ current_variant.price | money }}</span>
+                </div>
+                <div class="price-calculation-row">
+                  <span class="length-price-label">{{ block.settings.length_price_label | default: ' + Länge' }}: </span>
+                  <span class="additional-price-value">0,00 €</span>
+                </div>
+                <div class="price-calculation-row total">
+                  <span class="total-price-label">{{ block.settings.total_price_label | default: ' = Gesamt' }}: </span>
+                  <span class="total-price-value">{{ current_variant.price | money }}</span>
+                </div>
               </div>
             {%- endif -%}
           </div>

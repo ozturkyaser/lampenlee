@@ -22,8 +22,10 @@
   
   function openMenu() {
     sidebarNav.classList.add('active');
-    mobileToggle.classList.add('active');
-    mobileToggle.setAttribute('aria-expanded', 'true');
+    if (mobileToggle) {
+      mobileToggle.classList.add('active');
+      mobileToggle.setAttribute('aria-expanded', 'true');
+    }
     if (overlay) {
       overlay.classList.add('active');
     }
@@ -32,8 +34,10 @@
   
   function closeMenu() {
     sidebarNav.classList.remove('active');
-    mobileToggle.classList.remove('active');
-    mobileToggle.setAttribute('aria-expanded', 'false');
+    if (mobileToggle) {
+      mobileToggle.classList.remove('active');
+      mobileToggle.setAttribute('aria-expanded', 'false');
+    }
     if (overlay) {
       overlay.classList.remove('active');
     }
@@ -41,11 +45,13 @@
   }
   
   // Toggle button click
-  mobileToggle.addEventListener('click', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    toggleMenu();
-  });
+  if (mobileToggle) {
+    mobileToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleMenu();
+    });
+  }
   
   // Overlay click to close
   if (overlay) {
