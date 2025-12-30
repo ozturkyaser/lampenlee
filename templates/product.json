@@ -66,7 +66,6 @@
           "settings": {
             "enable_for_all_products": true,
             "enable_for_collection": "",
-            "enable_for_product_names": "kette",
             "field_label": "Länge der Kette (cm)",
             "placeholder": "Bitte Länge eingeben",
             "unit": "cm",
@@ -78,7 +77,9 @@
             "show_price_calculation": true,
             "base_price_label": "Grundpreis",
             "length_price_label": "+ Länge",
-            "total_price_label": "= Gesamt"
+            "total_price_label": "= Gesamt",
+            "show_additional_cost_in_cart": true,
+            "checkout_handling": "both"
           }
         },
         "inventory": {
