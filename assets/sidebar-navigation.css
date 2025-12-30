@@ -372,38 +372,6 @@
   margin: 0;
 }
 
-/* Programmed by Bereich - Standardmäßig versteckt, nur im Theme Editor sichtbar */
-.sidebar-programmed-by {
-  display: none !important;
-  margin-top: auto;
-  padding-top: 30px;
-  padding-bottom: 20px;
-  border-top: 1px solid var(--sidebar_nav_bd, var(--custom_bd, var(--alto)));
-  flex-direction: column;
-  gap: 4px;
-  font-size: 0.75rem;
-  line-height: 1.4;
-  color: var(--sidebar_nav_fg, var(--primary_text));
-  opacity: 0.7;
-}
-
-/* Nur im Theme Editor anzeigen */
-.theme-editor .sidebar-programmed-by {
-  display: flex !important;
-}
-
-.sidebar-programmed-by-label {
-  text-transform: lowercase;
-  font-weight: var(--main_fw, 400);
-  letter-spacing: 0.5px;
-}
-
-.sidebar-programmed-by-name {
-  font-weight: var(--main_fw_strong, 600);
-  color: var(--sidebar_nav_hover_color, var(--accent, var(--primary_bg_btn)));
-  opacity: 1;
-}
-
 /* RTL Support */
 [dir="rtl"] .sidebar-navigation {
   border-right: none;
@@ -579,19 +547,18 @@
   .main-wrapper {
     flex-direction: column;
   }
-  .main-wrapper {
-    flex-direction: column;
-  }
   
-  .sidebar-navigation {
-    width: 100%;
-    max-width: 100%;
-    position: relative;
-    top: 0;
-    height: auto;
-    border-right: none;
-    border-bottom: 1px solid var(--sidebar_nav_bd, var(--custom_bd));
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  /* Sidebar nimmt auf Mobile keinen Platz im Flex-Layout ein */
+  .main-wrapper > .sidebar-navigation {
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    flex-basis: 0 !important;
+    flex-shrink: 0 !important;
+    flex-grow: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
   }
   
   .main-wrapper > #content {
