@@ -177,3 +177,4 @@ Bei Fragen oder Problemen:
 1. Prüfen Sie die Browser-Konsole auf Fehler
 2. Prüfen Sie die Metafield-Konfiguration
 3. Prüfen Sie die Block-Einstellungen im Theme Editor
+
