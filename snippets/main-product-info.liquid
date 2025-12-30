@@ -693,13 +693,13 @@
               placeholder="{{ block.settings.placeholder | default: 'Bitte Länge eingeben' }}"
               data-price-per-unit="{{ block.settings.price_per_unit | default: 0 }}"
             >
+            <span class="custom-length-unit">{{ block.settings.unit | default: 'cm' }}</span>
             <input
               type="hidden"
               name="properties[_Preis pro Einheit]"
               class="custom-length-price-per-unit"
               value="{{ block.settings.price_per_unit | default: 0 }}"
             >
-            <span class="custom-length-unit">{{ block.settings.unit | default: 'cm' }}</span>
             {%- if block.settings.show_price_calculation -%}
               <div class="custom-length-price-info">
                 <span class="base-price-label">{{ block.settings.base_price_label | default: 'Grundpreis' }}: </span>
