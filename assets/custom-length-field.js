@@ -160,10 +160,7 @@
   
   // Listen for variant changes via custom events
   document.addEventListener('variant:change', function() {
-    setTimeout(function() {
-      updatePrice();
-      updatePricePerUnitField();
-    }, 100);
+    setTimeout(updatePrice, 100);
   });
   
   // Update price when variant changes (for theme compatibility)
@@ -172,10 +169,7 @@
     if (originalUpdatePrice) {
       window.updatePrice = function() {
         if (originalUpdatePrice) originalUpdatePrice.apply(this, arguments);
-        setTimeout(function() {
-          updatePrice();
-          updatePricePerUnitField();
-        }, 100);
+        setTimeout(updatePrice, 100);
       };
     }
   }
