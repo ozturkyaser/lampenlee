@@ -21,7 +21,7 @@
         "custom_length_field_aDEbez": {
           "type": "custom_length_field",
           "settings": {
-            "enable_for_all_products": false,
+            "enable_for_all_products": true,
             "enable_for_collection": "",
             "field_label": "Länge der Kette (cm)",
             "placeholder": "Bitte Länge eingeben",
@@ -30,7 +30,7 @@
             "max_length": 1000,
             "step": 5,
             "default_length": 0,
-            "price_per_unit": 0,
+            "price_per_unit": 100,
             "show_price_calculation": true,
             "base_price_label": "Grundpreis",
             "length_price_label": "+ Länge",
