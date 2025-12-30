@@ -72,14 +72,14 @@
             "min_length": 10,
             "max_length": 1000,
             "step": 5,
-            "default_length": 0,
+            "default_length": 10,
             "price_per_unit": 100,
             "show_price_calculation": true,
             "base_price_label": "Grundpreis",
             "length_price_label": "+ Länge",
             "total_price_label": "= Gesamt",
             "show_additional_cost_in_cart": true,
-            "checkout_handling": "both"
+            "checkout_handling": "property"
           }
         },
         "inventory": {
