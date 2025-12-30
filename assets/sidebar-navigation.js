@@ -77,8 +77,18 @@
   window.addEventListener('resize', function() {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function() {
+      // Auf Desktop: Stelle sicher, dass die Sidebar sichtbar ist
       if (window.innerWidth > 760) {
-        closeMenu();
+        // Entferne active-Klasse, da sie auf Desktop nicht benötigt wird
+        sidebarNav.classList.remove('active');
+        if (mobileToggle) {
+          mobileToggle.classList.remove('active');
+          mobileToggle.setAttribute('aria-expanded', 'false');
+        }
+        if (overlay) {
+          overlay.classList.remove('active');
+        }
+        body.style.overflow = '';
       }
     }, 250);
   });
