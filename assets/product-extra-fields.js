@@ -61,36 +61,47 @@
     }
     
     initializeField(wrapper, type, config) {
-      const input = wrapper.querySelector('input[type="number"], input[type="text"], .custom-length-input');
+      const input = wrapper.querySelector('input[type="number"], input[type="text"]');
       if (!input) return;
       
-      // Ensure input has the correct class for compatibility
-      if (!input.classList.contains('custom-length-input')) {
-        input.classList.add('custom-length-input');
-      }
-      
-      // Set data attribute for price per unit if not already set
-      if (!input.dataset.pricePerUnit && config.pricePerUnit > 0) {
-        input.dataset.pricePerUnit = config.pricePerUnit;
-      }
+      // Store original value format function
+      const formatValueWithUnit = (val) => {
+        const numVal = parseFloat(val) || 0;
+        return numVal > 0 ? numVal + (config.unit ? ' ' + config.unit : '') : '';
+      };
       
       // Input Validation
       input.addEventListener('input', (e) => {
         this.validateInput(e.target, config);
         this.updateFieldCalculation(wrapper, config);
-        this.updateFormProperties(wrapper, config);
       });
       
       input.addEventListener('change', (e) => {
         this.validateInput(e.target, config);
         this.updateFieldCalculation(wrapper, config);
         this.updateFormProperties(wrapper, config);
+        
+        // Update input value with unit if it has property name
+        if (input.name && input.name.startsWith('properties[') && input.value) {
+          const numVal = parseFloat(input.value);
+          if (numVal > 0) {
+            input.value = formatValueWithUnit(input.value);
+          }
+        }
       });
       
-      // Blur Event für finale Validierung
+      // Blur Event für finale Validierung und Formatierung
       input.addEventListener('blur', (e) => {
         this.validateInput(e.target, config);
         this.updateFormProperties(wrapper, config);
+        
+        // Update input value with unit if it has property name
+        if (input.name && input.name.startsWith('properties[') && input.value) {
+          const numVal = parseFloat(input.value);
+          if (numVal > 0) {
+            input.value = formatValueWithUnit(input.value);
+          }
+        }
       });
     }
     
@@ -249,52 +260,60 @@
       const value = input.value;
       const propertyName = config.propertyName;
       
-      // Remove existing property inputs (alle Varianten)
-      const existingProperties = form.querySelectorAll(`input[name="properties[${propertyName}]"], input[name*="properties[${propertyName}]"]`);
-      existingProperties.forEach(prop => prop.remove());
-      
-      // Add property if value exists
-      if (value && value !== '' && parseFloat(value) > 0) {
-        // Remove any existing property with this name first
-        const existingProps = form.querySelectorAll(`input[name="properties[${propertyName}]"]`);
-        existingProps.forEach(prop => prop.remove());
-        
-        const propertyInput = document.createElement('input');
-        propertyInput.type = 'hidden';
-        propertyInput.name = `properties[${propertyName}]`;
-        propertyInput.value = value + (config.unit ? ' ' + config.unit : '');
-        form.appendChild(propertyInput);
-        
-        // Debug log
-        console.log('✅ Extra Field Property gesetzt:', propertyName, '=', propertyInput.value);
+      // If input already has property name, ensure value includes unit
+      if (input.name && input.name.startsWith('properties[')) {
+        // Input already has property name, ensure value includes unit
+        const numericValue = parseFloat(value) || 0;
+        if (numericValue > 0) {
+          // Only update if unit is missing
+          if (!input.value.includes(config.unit)) {
+            input.value = numericValue + (config.unit ? ' ' + config.unit : '');
+          }
+        }
       } else {
-        console.warn('⚠️ Extra Field: Kein Wert gesetzt für', propertyName, 'Value:', value);
+        // Remove existing property inputs (alle Varianten) except the main input
+        const existingProperties = form.querySelectorAll(`input[name="properties[${propertyName}]"], input[name*="properties[${propertyName}]"]`);
+        existingProperties.forEach(prop => {
+          // Don't remove the main input field itself
+          if (prop !== input && prop.type === 'hidden') {
+            prop.remove();
+          }
+        });
+        
+        // Add hidden property if value exists and input doesn't have property name
+        if (value && value !== '' && parseFloat(value) > 0) {
+          const propertyInput = document.createElement('input');
+          propertyInput.type = 'hidden';
+          propertyInput.name = `properties[${propertyName}]`;
+          propertyInput.value = parseFloat(value) + (config.unit ? ' ' + config.unit : '');
+          form.appendChild(propertyInput);
+        }
+      }
+      
+      // Remove existing price per unit property
+      const existingPricePerUnit = form.querySelector('input[name="properties[_Preis pro Einheit]"]');
+      if (existingPricePerUnit) {
+        existingPricePerUnit.remove();
       }
       
       // Add price per unit property (für Berechnung im Warenkorb)
       if (config.pricePerUnit > 0) {
-        // Remove existing price per unit property
-        const existingPricePerUnit = form.querySelectorAll('input[name="properties[_Preis pro Einheit]"]');
-        existingPricePerUnit.forEach(prop => prop.remove());
-        
         const pricePerUnitInput = document.createElement('input');
         pricePerUnitInput.type = 'hidden';
         pricePerUnitInput.name = 'properties[_Preis pro Einheit]';
         pricePerUnitInput.value = config.pricePerUnit;
         form.appendChild(pricePerUnitInput);
-        
-        console.log('✅ Preis pro Einheit gesetzt:', config.pricePerUnit, 'Cent');
+      }
+      
+      // Remove existing additional cost property
+      const existingCost = form.querySelector('input[name="properties[_Zusätzliche Kosten]"]');
+      if (existingCost) {
+        existingCost.remove();
       }
       
       // Add additional cost property if price calculation is enabled
       if (config.pricePerUnit > 0 && value && parseFloat(value) > 0) {
         const additionalCost = Math.round(parseFloat(value) * config.pricePerUnit);
-        
-        // Remove existing additional cost property
-        const existingCost = form.querySelector('input[name="properties[_Zusätzliche Kosten]"]');
-        if (existingCost) {
-          existingCost.remove();
-        }
         
         if (additionalCost > 0) {
           const costInput = document.createElement('input');
@@ -304,10 +323,7 @@
           form.appendChild(costInput);
           
           // Debug log
-          console.log('✅ Zusätzliche Kosten gesetzt:', additionalCost, 'Cent (', this.formatMoney(additionalCost), ')');
-          console.log('   Berechnung: Länge', value, '× Preis pro Einheit', config.pricePerUnit, '=', additionalCost);
-        } else {
-          console.warn('⚠️ Zusätzliche Kosten: 0 (Länge:', value, ', Preis pro Einheit:', config.pricePerUnit, ')');
+          console.log('Extra Field: Länge=', value, 'cm, Preis pro Einheit=', config.pricePerUnit, 'Cent, Zusätzliche Kosten=', additionalCost, 'Cent');
         }
       }
     }
@@ -345,63 +361,40 @@
     }
     
     setupFormSubmitHandlers() {
-      const forms = document.querySelectorAll('form[action*="/cart/add"], form.f8pr, form[action*="/cart"], form.form-card');
+      const forms = document.querySelectorAll('form[action*="/cart/add"], form.f8pr, form[action*="/cart"]');
       
       forms.forEach(form => {
-        // Use capture phase to ensure properties are set before AJAX handlers
+        // Use capture phase to run BEFORE other handlers
         form.addEventListener('submit', (e) => {
-          // Update all properties before submit
+          // Update all properties BEFORE submit
           this.fields.forEach(field => {
             this.updateFormProperties(field.wrapper, field.config);
           });
           
-          // Also handle old custom-length-input fields for compatibility
-          const lengthInputs = form.querySelectorAll('.custom-length-input');
-          lengthInputs.forEach(input => {
-            const wrapper = input.closest('[data-price-per-unit], .custom-length-field-wrapper');
-            if (wrapper) {
-              const pricePerUnit = parseFloat(wrapper.dataset.pricePerUnit) || parseFloat(input.dataset.pricePerUnit) || 0;
-              const length = parseFloat(input.value) || 0;
-              
-              if (length > 0 && pricePerUnit > 0) {
-                const additionalCost = Math.round(length * pricePerUnit);
-                
-                // Remove existing additional cost property
-                const existingCost = form.querySelector('input[name="properties[_Zusätzliche Kosten]"]');
-                if (existingCost) {
-                  existingCost.remove();
-                }
-                
-                // Add additional cost property
-                if (additionalCost > 0) {
-                  const costInput = document.createElement('input');
-                  costInput.type = 'hidden';
-                  costInput.name = 'properties[_Zusätzliche Kosten]';
-                  costInput.value = additionalCost;
-                  form.appendChild(costInput);
-                  console.log('Product Extra Fields: Zusätzliche Kosten gesetzt:', additionalCost, 'Cent');
-                }
-              }
-            }
-          });
-          
           // Debug: Log all properties before submit
-          setTimeout(() => {
-            const formData = new FormData(form);
-            const properties = {};
-            for (let [key, value] of formData.entries()) {
-              if (key.startsWith('properties[')) {
-                const propKey = key.replace('properties[', '').replace(']', '');
-                properties[propKey] = value;
-              }
+          const formData = new FormData(form);
+          const properties = {};
+          for (let [key, value] of formData.entries()) {
+            if (key.startsWith('properties[')) {
+              const propKey = key.replace('properties[', '').replace(']', '');
+              properties[propKey] = value;
             }
-            if (Object.keys(properties).length > 0) {
-              console.log('Product Extra Fields: Alle Properties vor Submit:', properties);
-            } else {
-              console.warn('Product Extra Fields: Keine Properties gefunden!');
-            }
-          }, 10);
-        }, { capture: true, once: false });
+          }
+          if (Object.keys(properties).length > 0) {
+            console.log('Product Extra Fields: Properties vor Submit:', properties);
+          }
+        }, { capture: true, passive: false });
+        
+        // Also hook into button clicks to update properties early
+        const submitButtons = form.querySelectorAll('button[type="submit"], button[name="add"]');
+        submitButtons.forEach(button => {
+          button.addEventListener('click', (e) => {
+            // Update properties on button click (before form submit)
+            this.fields.forEach(field => {
+              this.updateFormProperties(field.wrapper, field.config);
+            });
+          }, { capture: true });
+        });
       });
     }
     
@@ -424,3 +417,4 @@
   // Initialize
   window.ProductExtraFields = new ProductExtraFields();
 })();
+

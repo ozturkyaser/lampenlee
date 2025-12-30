@@ -71,7 +71,9 @@
             for property in line_item.properties
                 if property.first == 'Länge'
                     assign length_property = property
-                    assign length_value = property.last | times: 1
+                    # Extract numeric value from "100 cm" format
+                    assign length_str = property.last | remove: 'cm' | remove: 'm' | remove: ' ' | strip
+                    assign length_value = length_str | times: 1
                 elsif property.first == '_Preis pro Einheit'
                     assign price_per_unit_property = property
                     assign price_per_unit_value = property.last | times: 1
@@ -81,6 +83,7 @@
                 endif
             endfor
             
+            # If additional_cost is not set but we have length and price_per_unit, calculate it
             if additional_cost == 0 and length_value > 0 and price_per_unit_value > 0
                 assign additional_cost = length_value | times: price_per_unit_value
             endif
