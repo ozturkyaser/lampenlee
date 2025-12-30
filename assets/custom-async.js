@@ -5092,6 +5092,12 @@ var ajaxCart = (function (module) {
 					const length = parseFloat(input.value) || 0;
 					const pricePerUnit = parseFloat(input.dataset.pricePerUnit) || 0;
 					
+					// Ensure price per unit field is set
+					const pricePerUnitField = input.closest('.custom-length-field-wrapper')?.querySelector('.custom-length-price-per-unit');
+					if (pricePerUnitField && pricePerUnit > 0) {
+						pricePerUnitField.value = pricePerUnit;
+					}
+					
 					if (length > 0 && pricePerUnit > 0) {
 						const additionalCost = Math.round(length * pricePerUnit);
 						
@@ -5108,9 +5114,31 @@ var ajaxCart = (function (module) {
 							costInput.name = 'properties[_Zusätzliche Kosten]';
 							costInput.value = additionalCost;
 							form.appendChild(costInput);
+							
+							// Debug: Log property addition
+							console.log('Längenfeld: Zusätzliche Kosten Property hinzugefügt:', additionalCost, 'Cent');
+						}
+					} else {
+						// Remove property if length is 0 or price per unit is 0
+						const existingCostInput = form.querySelector('input[name="properties[_Zusätzliche Kosten]"]');
+						if (existingCostInput) {
+							existingCostInput.remove();
 						}
 					}
 				});
+				
+				// Debug: Log all properties before submit
+				const formData = new FormData(form);
+				const allProperties = {};
+				for (let [key, value] of formData.entries()) {
+					if (key.startsWith('properties[')) {
+						const propKey = key.replace('properties[', '').replace(']', '');
+						allProperties[propKey] = value;
+					}
+				}
+				if (Object.keys(allProperties).length > 0) {
+					console.log('Längenfeld: Alle Properties vor Submit:', allProperties);
+				}
 
 				form.classList.add('processing');
 
