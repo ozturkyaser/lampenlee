@@ -15,7 +15,7 @@
       "type": "announcement-bar",
       "settings": {
         "color_palette": "scheme-1",
-        "text": "<p><strong>T: 030 - 204 47 23 - (Fax) 030-8620 18 07 - E-Mail: info@lampen-lee-berlin.de</strong></p>"
+        "text": "<h2><strong>T: </strong><a href=\"tel:0302044723\" target=\"_blank\" title=\"tel:0302044723\"><strong>030 - 204 47 23</strong></a><strong> - E-Mail: info@lampen-lee-berlin.de</strong></h2>"
       }
     },
     "header": {
