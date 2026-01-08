@@ -20,10 +20,10 @@
             "overlay_opacity": 0,
             "color_palette": "scheme-1",
             "text_position": "align-center text-center",
-            "title": "<h2>Image banner</h2>",
+            "title": "",
             "title_underline_style": "none",
-            "text": "<p>Highlight a new collection and share details about products related to this image</p>",
-            "show_first_link": true,
+            "text": "",
+            "show_first_link": false,
             "first_link_text": "Button",
             "first_link_url": "/",
             "first_button_style": "primary plain",
@@ -37,6 +37,7 @@
         },
         "slide_A7ytNV": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/155.jpg",
             "layout": "background",
@@ -60,6 +61,7 @@
         },
         "slide_RCUrNJ": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/5_b5bbe956-e3ca-42b4-8a58-ff213f11b79d.jpg",
             "layout": "background",
@@ -87,7 +89,6 @@
         "slide_A7ytNV",
         "slide_RCUrNJ"
       ],
-      "disabled": true,
       "name": "t:sections.slideshow.presets.name",
       "settings": {
         "height": "adapt",
