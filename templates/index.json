@@ -150,6 +150,7 @@
         "title_BpTaKL",
         "content_PD7m8K"
       ],
+      "disabled": true,
       "name": "t:sections.rich_text.presets.name",
       "settings": {
         "color_palette": "",
@@ -160,6 +161,92 @@
         "width_banner": "boxed",
         "width": "wide",
         "spacing_desktop": 0,
+        "spacing_mobile": 30,
+        "fix_zindex": 0
+      }
+    },
+    "1660291177d9f45101": {
+      "type": "section-collection-list",
+      "name": "L&M Lee Lampen Collection",
+      "settings": {
+        "collections": [
+          "jugendstil-deckenleuchte",
+          "kugellampen",
+          "siemens-zapfen",
+          "tischleuchten",
+          "wandlampen",
+          "zugdeckenleuchten",
+          "stehleuchten",
+          "deckenringe",
+          "glashalter",
+          "glasschirme",
+          "baldachine",
+          "ersatzeile-zubehor",
+          "bilderleuchten",
+          "klavierleuchten",
+          "reperatur-manufaktur-und-werkstatt"
+        ],
+        "image_ratio": "portrait",
+        "fill_images": true,
+        "layout": "rows",
+        "number_of_items": 5,
+        "text_alignment": "start",
+        "width": "boxed",
+        "title": "<h2>L&M Lee Lampen Kategorien</h2>",
+        "title_underline_style": "none",
+        "show_link": true,
+        "link_text": "Alle anzeigen",
+        "link_url": "shopify://collections",
+        "button_style": "primary plain",
+        "collection_title_size": "h2",
+        "mobile_layout": "grid",
+        "spacing_desktop": 50,
+        "spacing_mobile": 50,
+        "fix_zindex": 5
+      }
+    },
+    "section_rich_text_xfhqXJ": {
+      "type": "section-rich-text",
+      "blocks": {
+        "title_fqfY88": {
+          "type": "title",
+          "settings": {
+            "title": "<h3>Lampen und Leuchten aus Berlin</h3>",
+            "title_underline_style": "none"
+          }
+        },
+        "content_gTLQ8N": {
+          "type": "content",
+          "settings": {
+            "page": "",
+            "text": "<p>Seit 1972 sind wir in Berlin und weit darüber hinaus für unsere ausgewählten Antiquitäten und Wohnraumleuchten bekannt. Als kleinste Leuchtenfabrik mit der größten Vielfalt möchten wir Ihnen unser Handwerk und unsere Leidenschaft vorstellen.</p><p>Mit unserer Berliner Leuchtentradition bewahren wir ein Stück Vergangenheit. Gleichzeitig bieten wir Ihnen mehr als nur Beratung: Wir fertigen Leuchten individuell nach Ihren Wünschen an – von Sonderanfertigungen über Restaurierungen bis hin zu Reparaturen.</p><p>Dank handwerklicher Herstellung sind wir in unserer Werkstatt flexibel: Ob besondere Maße, alternative Metallfarben oder andere Glasschirme – wir realisieren Ihre Vorstellungen. Senden Sie uns Ihre Anfrage einfach an <a href=\"mailto:info@lampenlee.de\" title=\"mailto:info@lampenlee.de\">info@lampenlee.de</a>.</p><p>Neben Klassikern wie der Peter-Behrens-Lampe <em>Luzette</em> oder der original Berliner Messing-Bankerslampe entwickeln wir unser Sortiment stetig weiter. Durch die Zusammenarbeit mit zahlreichen nationalen und internationalen Herstellern können wir Ihnen heute ein besonders breites Spektrum an Leuchten anbieten.</p><p>Unser Angebot umfasst unter anderem:</p><ul><li>Messinglampen, Tiffany-Lampen, Stehlampen und Jugendstil-Tischlampen<br/></li><li>Kugel- und Deckenlampen, Wandlampen im Jugendstil, Petroleumlampen<br/></li><li>Bad- und Flurlampen, Außen- und Hofbeleuchtung, Terrassen- und Hausflurleuchten<br/></li><li>Lampen für Hotels, Gastronomie, Büros oder Ferienwohnungen<br/></li><li>Bilderleuchten, Glas- und Stofflampenschirme, Lampenzubehör und Ersatzteile</li></ul><p>Stöbern Sie auf unserer Startseite und entdecken Sie Ihre neue Lampe – individuell, hochwertig und mit Berliner Tradition gefertigt.</p>"
+          }
+        },
+        "button_XQKCpG": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "link_text": "Button",
+            "link_url": "/",
+            "button_style": "secondary plain"
+          }
+        }
+      },
+      "block_order": [
+        "title_fqfY88",
+        "content_gTLQ8N",
+        "button_XQKCpG"
+      ],
+      "name": "t:sections.rich_text.presets.name",
+      "settings": {
+        "color_palette": "",
+        "overlay_opacity": 100,
+        "text_alignment": "start",
+        "content_width": 1280,
+        "height": "size-s",
+        "width_banner": "boxed",
+        "width": "wide",
+        "spacing_desktop": 50,
         "spacing_mobile": 30,
         "fix_zindex": 0
       }
@@ -285,46 +372,6 @@
         "width": "boxed",
         "spacing_desktop": 75,
         "spacing_mobile": 20
-      }
-    },
-    "1660291177d9f45101": {
-      "type": "section-collection-list",
-      "name": "L&M Lee Lampen Collection",
-      "settings": {
-        "collections": [
-          "jugendstil-deckenleuchte",
-          "kugellampen",
-          "siemens-zapfen",
-          "tischleuchten",
-          "wandlampen",
-          "zugdeckenleuchten",
-          "stehleuchten",
-          "deckenringe",
-          "glashalter",
-          "glasschirme",
-          "baldachine",
-          "ersatzeile-zubehor",
-          "bilderleuchten",
-          "klavierleuchten",
-          "reperatur-manufaktur-und-werkstatt"
-        ],
-        "image_ratio": "portrait",
-        "fill_images": true,
-        "layout": "rows",
-        "number_of_items": 5,
-        "text_alignment": "start",
-        "width": "boxed",
-        "title": "<h2>L&M Lee Lampen Kategorien</h2>",
-        "title_underline_style": "none",
-        "show_link": true,
-        "link_text": "Alle anzeigen",
-        "link_url": "shopify://collections",
-        "button_style": "primary plain",
-        "collection_title_size": "h2",
-        "mobile_layout": "grid",
-        "spacing_desktop": 50,
-        "spacing_mobile": 50,
-        "fix_zindex": 5
       }
     },
     "section_divider_bEHEDn": {
@@ -728,62 +775,17 @@
         "spacing_mobile": 30,
         "fix_zindex": 0
       }
-    },
-    "section_rich_text_xfhqXJ": {
-      "type": "section-rich-text",
-      "blocks": {
-        "title_fqfY88": {
-          "type": "title",
-          "settings": {
-            "title": "<h3>Lampen und Leuchten aus Berlin</h3>",
-            "title_underline_style": "none"
-          }
-        },
-        "content_gTLQ8N": {
-          "type": "content",
-          "settings": {
-            "page": "",
-            "text": "<p>Seit 1972 sind wir in Berlin und weit darüber hinaus für unsere ausgewählten Antiquitäten und Wohnraumleuchten bekannt. Als kleinste Leuchtenfabrik mit der größten Vielfalt möchten wir Ihnen unser Handwerk und unsere Leidenschaft vorstellen.</p><p>Mit unserer Berliner Leuchtentradition bewahren wir ein Stück Vergangenheit. Gleichzeitig bieten wir Ihnen mehr als nur Beratung: Wir fertigen Leuchten individuell nach Ihren Wünschen an – von Sonderanfertigungen über Restaurierungen bis hin zu Reparaturen.</p><p>Dank handwerklicher Herstellung sind wir in unserer Werkstatt flexibel: Ob besondere Maße, alternative Metallfarben oder andere Glasschirme – wir realisieren Ihre Vorstellungen. Senden Sie uns Ihre Anfrage einfach an <a href=\"mailto:info@lampenlee.de\" title=\"mailto:info@lampenlee.de\">info@lampenlee.de</a>.</p><p>Neben Klassikern wie der Peter-Behrens-Lampe <em>Luzette</em> oder der original Berliner Messing-Bankerslampe entwickeln wir unser Sortiment stetig weiter. Durch die Zusammenarbeit mit zahlreichen nationalen und internationalen Herstellern können wir Ihnen heute ein besonders breites Spektrum an Leuchten anbieten.</p><p>Unser Angebot umfasst unter anderem:</p><ul><li>Messinglampen, Tiffany-Lampen, Stehlampen und Jugendstil-Tischlampen<br/></li><li>Kugel- und Deckenlampen, Wandlampen im Jugendstil, Petroleumlampen<br/></li><li>Bad- und Flurlampen, Außen- und Hofbeleuchtung, Terrassen- und Hausflurleuchten<br/></li><li>Lampen für Hotels, Gastronomie, Büros oder Ferienwohnungen<br/></li><li>Bilderleuchten, Glas- und Stofflampenschirme, Lampenzubehör und Ersatzteile</li></ul><p>Stöbern Sie auf unserer Startseite und entdecken Sie Ihre neue Lampe – individuell, hochwertig und mit Berliner Tradition gefertigt.</p>"
-          }
-        },
-        "button_XQKCpG": {
-          "type": "button",
-          "disabled": true,
-          "settings": {
-            "link_text": "Button",
-            "link_url": "/",
-            "button_style": "secondary plain"
-          }
-        }
-      },
-      "block_order": [
-        "title_fqfY88",
-        "content_gTLQ8N",
-        "button_XQKCpG"
-      ],
-      "name": "t:sections.rich_text.presets.name",
-      "settings": {
-        "color_palette": "",
-        "overlay_opacity": 100,
-        "text_alignment": "start",
-        "content_width": 1280,
-        "height": "size-s",
-        "width_banner": "boxed",
-        "width": "wide",
-        "spacing_desktop": 50,
-        "spacing_mobile": 30,
-        "fix_zindex": 0
-      }
     }
   },
   "order": [
     "section_slideshow_9hzYDh",
     "section_image_comparison_VYyGjY",
     "section_rich_text_dGLKDd",
+    "1660291177d9f45101",
+    "section_rich_text_xfhqXJ",
     "section_usp_bar_iUREVN",
     "1660291161fe2caafb",
     "section_divider_hmTKw7",
-    "1660291177d9f45101",
     "section_divider_bEHEDn",
     "16602912025c583cc8",
     "section_featured_collection_hnaxwr",
@@ -796,7 +798,6 @@
     "section_featured_collection_CniNVf",
     "section_featured_collection_i4HRDM",
     "section_image_with_text_RqgCqc",
-    "section_image_with_text_FAFTDc",
-    "section_rich_text_xfhqXJ"
+    "section_image_with_text_FAFTDc"
   ]
 }
