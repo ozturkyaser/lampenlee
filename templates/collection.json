@@ -21,7 +21,8 @@
       "settings": {
         "collections": [
           "baldachine",
-          "glashalter"
+          "glashalter",
+          "kabel"
         ],
         "image_ratio": "square",
         "fill_images": true,
