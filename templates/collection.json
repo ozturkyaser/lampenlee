@@ -25,7 +25,8 @@
           "kabel",
           "fassung",
           "schalter-stecker",
-          "ketten-stangen"
+          "ketten-stangen",
+          "lampenaufhangung-lampenpendel"
         ],
         "image_ratio": "square",
         "fill_images": true,
