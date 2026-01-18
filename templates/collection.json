@@ -22,7 +22,8 @@
         "collections": [
           "baldachine",
           "glashalter",
-          "kabel"
+          "kabel",
+          "fassung"
         ],
         "image_ratio": "square",
         "fill_images": true,
