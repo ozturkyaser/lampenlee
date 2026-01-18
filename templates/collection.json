@@ -23,12 +23,13 @@
           "baldachine",
           "glashalter",
           "kabel",
-          "fassung"
+          "fassung",
+          "schalter-stecker"
         ],
         "image_ratio": "square",
         "fill_images": true,
         "layout": "slider",
-        "number_of_items": 5,
+        "number_of_items": 7,
         "text_alignment": "start",
         "width": "boxed",
         "title": "<h2>Collection list</h2>",
