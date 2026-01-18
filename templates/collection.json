@@ -24,7 +24,8 @@
           "glashalter",
           "kabel",
           "fassung",
-          "schalter-stecker"
+          "schalter-stecker",
+          "ketten-stangen"
         ],
         "image_ratio": "square",
         "fill_images": true,
