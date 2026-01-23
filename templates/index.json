@@ -494,6 +494,7 @@
     },
     "section_featured_products_mAAwDf": {
       "type": "section-featured-products",
+      "disabled": true,
       "name": "t:sections.featured_products.presets.name",
       "settings": {
         "products": [
