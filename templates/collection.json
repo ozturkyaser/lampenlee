@@ -17,6 +17,7 @@
     },
     "section_collection_list_bGxtht": {
       "type": "section-collection-list",
+      "disabled": true,
       "name": "t:sections.collection_list.presets.name",
       "settings": {
         "collections": [
@@ -94,7 +95,7 @@
         "enable_secondary_products_per_row": false,
         "secondary_products_per_row": 4,
         "default_grid": "primary",
-        "enable_filters": true,
+        "enable_filters": false,
         "enable_menu": true,
         "enable_collections": true,
         "filters_menu_alignment": "left",
