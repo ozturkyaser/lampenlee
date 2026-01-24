@@ -100,7 +100,14 @@
         "enable_collections": true,
         "filters_menu_alignment": "left",
         "filter_menu": "",
-        "collections_menu": [],
+        "collections_menu": [
+          "baldachine",
+          "glashalter",
+          "glasschirme",
+          "kabel",
+          "fassung",
+          "ketten-stangen"
+        ],
         "filter_sticky": false,
         "filters_show_more_limit": 7,
         "image_swatches_size": "xs",
