@@ -1,1 +1,77 @@
-{"sections":{"breadcrumbs":{"type":"breadcrumbs","settings":{"hide_mobile":false}},"main-list-collection":{"type":"main-list-collection","disabled":true,"settings":{"width":"boxed","title_size":"h1","image_ratio":"square","fill_images":true,"pagination_qty":12,"number_of_items":4}},"section_collection_list_Nj48h7":{"type":"section-collection-list","settings":{"collections":["jugendstil-deckenleuchte","siemens-zapfen","tischleuchten","kugellampen","wandlampen","bilderleuchten","klavierleuchten","zugdeckenleuchten","deckenringe","glasschirme","glashalter","baldachine","stehleuchten","ersatzeile-zubehor","aussenleuchten","oberflachen-pflege","reperatur-manufaktur-und-werkstatt"],"image_ratio":"square","fill_images":true,"layout":"rows","number_of_items":6,"text_alignment":"start","width":"boxed","title":"<h2>Collection list<\/h2>","title_underline_style":"none","show_link":false,"link_text":"View all","link_url":"shopify:\/\/collections","button_style":"primary plain","collection_title_size":"h3","mobile_layout":"slider","spacing_desktop":65,"spacing_mobile":30,"fix_zindex":0}}},"order":["breadcrumbs","main-list-collection","section_collection_list_Nj48h7"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "breadcrumbs": {
+      "type": "breadcrumbs",
+      "settings": {
+        "hide_mobile": false
+      }
+    },
+    "main-list-collection": {
+      "type": "main-list-collection",
+      "disabled": true,
+      "settings": {
+        "width": "boxed",
+        "title_size": "h1",
+        "image_ratio": "square",
+        "fill_images": true,
+        "pagination_qty": 12,
+        "number_of_items": 4
+      }
+    },
+    "section_collection_list_Nj48h7": {
+      "type": "section-collection-list",
+      "settings": {
+        "collections": [
+          "jugendstil-deckenleuchte",
+          "siemens-zapfen",
+          "tischleuchten",
+          "kugellampen",
+          "wandlampen",
+          "bilderleuchten",
+          "klavierleuchten",
+          "zugdeckenleuchten",
+          "deckenringe",
+          "glasschirme",
+          "glashalter",
+          "baldachine",
+          "stehleuchten",
+          "ersatzeile-zubehor",
+          "aussenleuchten",
+          "oberflachen-pflege",
+          "reperatur-manufaktur-und-werkstatt"
+        ],
+        "image_ratio": "square",
+        "fill_images": true,
+        "layout": "rows",
+        "number_of_items": 6,
+        "text_alignment": "start",
+        "width": "boxed",
+        "title": "<h2>Katalog</h2>",
+        "title_underline_style": "none",
+        "show_link": false,
+        "link_text": "View all",
+        "link_url": "shopify://collections",
+        "button_style": "primary plain",
+        "collection_title_size": "h3",
+        "mobile_layout": "slider",
+        "spacing_desktop": 65,
+        "spacing_mobile": 30,
+        "fix_zindex": 0
+      }
+    }
+  },
+  "order": [
+    "breadcrumbs",
+    "main-list-collection",
+    "section_collection_list_Nj48h7"
+  ]
+}
