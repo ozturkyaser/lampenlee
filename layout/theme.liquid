@@ -6,7 +6,7 @@
   dir="{% if rtl_languages contains localization.language.iso_code %}rtl{% else %}ltr{% endif %}"
   class="no-js {% if settings.enable_accessibility_default %}t1ac{% endif %}{% if request.design_mode %} theme-editor{% endif %}{% unless settings.enable_hyphens %} no-hyph{% endunless %}"
 >
-  <head>
+  <head><!-- SEOAnt Speed Up Script -->{%- if shop.metafields.seoantAppSiteSpeedUpV2.switch == 1 -%}{% include 'SEOAnt-SpeedUp' %}{%- endif -%}<!-- /SEOAnt Speed Up Script -->
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>
