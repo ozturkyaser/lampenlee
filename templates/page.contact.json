@@ -247,16 +247,6 @@
       ],
       "settings": {}
     },
-    "section-google-maps": {
-      "type": "section-google-maps",
-      "settings": {
-        "google_maps_iframe": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2429.5799833470446!2d13.319589778446652!3d52.486740172052386!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a850fb87028757%3A0xd0eeb168ce982e60!2sL.%20%26%20M.%20Lee%20Lampen%20Berlin!5e0!3m2!1sde!2sde!4v1717928142499!5m2!1sde!2sde\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
-        "width": "boxed",
-        "spacing_desktop": 50,
-        "spacing_mobile": 30,
-        "fix_zindex": 0
-      }
-    },
     "section_usp_bar_yELHGU": {
       "type": "section-usp-bar",
       "blocks": {
@@ -305,6 +295,16 @@
         "spacing_mobile": 30,
         "fix_zindex": 0
       }
+    },
+    "section-google-maps": {
+      "type": "section-google-maps",
+      "settings": {
+        "google_maps_iframe": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2429.5799833470446!2d13.319589778446652!3d52.486740172052386!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a850fb87028757%3A0xd0eeb168ce982e60!2sL.%20%26%20M.%20Lee%20Lampen%20Berlin!5e0!3m2!1sde!2sde!4v1717928142499!5m2!1sde!2sde\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+        "width": "boxed",
+        "spacing_desktop": 50,
+        "spacing_mobile": 30,
+        "fix_zindex": 0
+      }
     }
   },
   "order": [
@@ -314,7 +314,7 @@
     "section-faq",
     "section-contact-form",
     "page-service-info-blocks",
-    "section-google-maps",
-    "section_usp_bar_yELHGU"
+    "section_usp_bar_yELHGU",
+    "section-google-maps"
   ]
 }
