@@ -263,26 +263,33 @@
         "usp_a8jBXd": {
           "type": "usp",
           "settings": {
-            "usp": "<p>Ubahn U7 Blissestr.</p>"
+            "usp": "<p>Ubahn U7 Haltestelle: Blissestr.</p>"
           }
         },
         "usp_kgWk7V": {
           "type": "usp",
           "settings": {
-            "usp": "<p>Bus 249 Station U Blissestr./Uhlandstr.</p>"
+            "usp": "<p>Bus 249 Haltestelle: U Blissestr./Uhlandstr.</p>"
           }
         },
         "usp_pY6p6R": {
           "type": "usp",
           "settings": {
-            "usp": "<p>Bus 143, N7 und N43 Station U Blissestr./Uhlandstr.</p>"
+            "usp": "<p>Bus 143, N7 und N43 Haltestelle: U Blissestr./Uhlandstr.</p>"
+          }
+        },
+        "usp_kMGciC": {
+          "type": "usp",
+          "settings": {
+            "usp": "<p>Bus 101 Haltestelle: U Blissestr.</p>"
           }
         }
       },
       "block_order": [
         "usp_a8jBXd",
         "usp_kgWk7V",
-        "usp_pY6p6R"
+        "usp_pY6p6R",
+        "usp_kMGciC"
       ],
       "name": "t:sections.usp_bar.presets.name",
       "settings": {
