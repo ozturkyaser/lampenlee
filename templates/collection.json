@@ -17,7 +17,6 @@
     },
     "section_collection_list_bGxtht": {
       "type": "section-collection-list",
-      "disabled": true,
       "name": "t:sections.collection_list.presets.name",
       "settings": {
         "collections": [
