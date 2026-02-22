@@ -90,7 +90,7 @@
         "show_collection_image": false,
         "enable_grid_list_toggle": true,
         "productview_type": "grid",
-        "products_per_row": 3,
+        "products_per_row": 4,
         "enable_secondary_products_per_row": false,
         "secondary_products_per_row": 4,
         "default_grid": "primary",
