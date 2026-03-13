@@ -137,7 +137,7 @@
     if layout == 'list-compact'
       assign price = current_variant.price | money
     else
-      assign price = product.price | money
+      assign price = current_variant.price | money
     endif
   endif
 
