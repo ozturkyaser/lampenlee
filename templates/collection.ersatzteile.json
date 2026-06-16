@@ -34,7 +34,7 @@
         "number_of_items": 7,
         "text_alignment": "start",
         "width": "boxed",
-        "title": "<h2>Collection</h2>",
+        "title": "<h2><strong>Kollektion</strong></h2>",
         "title_underline_style": "none",
         "show_link": false,
         "link_text": "Button",
