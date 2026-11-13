@@ -202,4 +202,14 @@ a.shopify-payment-button__more-options { flex-grow: 3; }
 	align-items: center; 
 }
 
+/* Produktinformationen rechts sticky – nur Desktop */
+@media screen and (min-width: 990px) {
+  .m6pr > :last-child {
+    position: sticky;
+    top: 100px;
+    align-self: flex-start;
+  }
+}
+
+
 #root #shopify-product-reviews { margin-top: 0; }
