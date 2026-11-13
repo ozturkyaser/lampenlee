@@ -61,10 +61,6 @@
             "enable_selling_plans": true
           }
         },
-        "inventory": {
-          "type": "inventory",
-          "settings": {}
-        },
         "80e67d89-9369-4ddb-8111-2aa1c36fb500": {
           "type": "usp",
           "settings": {
@@ -82,6 +78,10 @@
           "settings": {
             "usp": "<p><strong>Fassung : </strong>{{ product.metafields.custom.fassung.value }}</p>"
           }
+        },
+        "inventory": {
+          "type": "inventory",
+          "settings": {}
         },
         "price": {
           "type": "price",
@@ -129,10 +129,10 @@
         "short_description",
         "90724a70-740a-4cc9-984c-764e1d76a5bd",
         "variant_selection",
-        "inventory",
         "80e67d89-9369-4ddb-8111-2aa1c36fb500",
         "ce57c15f-9a2f-4731-8dfe-6ed8eefa9924",
         "52df90b0-c2aa-4ae2-8f31-d18e5a33e088",
+        "inventory",
         "price",
         "buy_button",
         "ee5e9f1c-a80a-4244-950f-03806a509775",
